@@ -14,23 +14,49 @@ command_exists() {
     command -v "$1" >/dev/null 2>&1
 }
 
-# Check for dependencies
-check_dependencies() {
-    echo "Checking dependencies..."
-    if ! command_exists zsh; then
-        echo "Error: Zsh is not installed. Please install it first."
-        exit 1
+# Detect OS
+get_os() {
+    if [ -f /etc/os-release ]; then
+        . /etc/os-release
+        OS=$ID
+    else
+        OS=$(uname -s)
     fi
-    if ! command_exists git; then
-        echo "Error: Git is not installed. Please install it first."
-        exit 1
-    fi
-    if ! command_exists fastfetch; then
-        echo "Error: Fastfetch is not installed. Please install it first."
-        exit 1
+    echo "$OS"
+}
+
+# Install dependencies
+install_dependencies() {
+    echo "Checking and installing dependencies..."
+    OS=$(get_os)
+
+    if [ "$OS" = "arch" ]; then
+        echo "Detected Arch Linux. Installing dependencies with pacman..."
+        # Check for sudo
+        if ! command_exists sudo; then
+            echo "Error: sudo is not installed. Please install it first."
+            exit 1
+        fi
+        # Install dependencies if they don't exist
+        for pkg in zsh git fastfetch; do
+            if ! command_exists "$pkg"; then
+                sudo pacman -S --noconfirm "$pkg"
+            else
+                echo "$pkg is already installed."
+            fi
+        done
+    else
+        echo "Checking for required commands..."
+        for cmd in zsh git fastfetch; do
+            if ! command_exists "$cmd"; then
+                echo "Error: $cmd is not installed. Please install it on your system."
+                exit 1
+            fi
+        done
     fi
     echo "All dependencies are satisfied."
 }
+
 
 # Create backups
 create_backups() {
@@ -71,7 +97,7 @@ create_symlinks() {
 
 # Main
 main() {
-    check_dependencies
+    install_dependencies
     create_backups
     install_oh_my_zsh_and_p10k
     create_symlinks
