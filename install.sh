@@ -38,7 +38,7 @@ install_dependencies() {
             exit 1
         fi
         # Install all dependencies using pacman --needed
-        sudo pacman -S --noconfirm --needed zsh fzf fd bat eza ripgrep jq zsh-autosuggestions zsh-syntax-highlighting zsh-completions thefuck duf dust btop delta xh lsof curl git neovim fastfetch
+        sudo pacman -S --noconfirm --needed zsh fzf fd bat eza ripgrep jq zsh-autosuggestions zsh-syntax-highlighting zsh-completions thefuck duf dust btop xh lsof curl git neovim fastfetch
         echo "All pacman dependencies are satisfied."
     else
         echo "Checking for required commands..."
@@ -111,6 +111,13 @@ main() {
     install_oh_my_zsh_and_p10k
     create_symlinks
     echo "Installation complete! Please restart your shell."
+    echo ""
+    echo "Note: The 'delta' utility (git-delta) could not be installed automatically as it's typically found in the AUR."
+    echo "To install it, you can use an AUR helper like 'yay' or 'paru':"
+    echo "  yay -S git-delta-git --noconfirm"
+    echo "  or"
+    echo "  paru -S git-delta-git --noconfirm"
+    echo "Alternatively, you can install it manually from the AUR."
 }
 
 main
