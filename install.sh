@@ -96,6 +96,7 @@ create_symlinks() {
     ln -sf "$CONFIG_DIR/zshrc.template" "$HOME/.zshrc"
     ln -sf "$CONFIG_DIR/p10k.zsh.template" "$HOME/.p10k.zsh"
     mkdir -p "$HOME/.config"
+    mkdir -p "$HOME/.config/zshrc"
     ln -sfn "$CONFIG_DIR/fastfetch" "$HOME/.config/fastfetch"
     echo "Symbolic links created."
 }
