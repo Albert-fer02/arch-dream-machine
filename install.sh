@@ -37,24 +37,33 @@ install_dependencies() {
             echo "Error: sudo is not installed. Please install it first."
             exit 1
         fi
-        # Install dependencies if they don't exist
-        for pkg in zsh git fastfetch; do
-            if ! command_exists "$pkg"; then
-                sudo pacman -S --noconfirm "$pkg"
-            else
-                echo "$pkg is already installed."
-            fi
-        done
+        # Install all dependencies using pacman --needed
+        sudo pacman -S --noconfirm --needed zsh fzf fd bat eza ripgrep jq zsh-autosuggestions zsh-syntax-highlighting zsh-completions thefuck duf dust btop delta xh lsof curl git neovim fastfetch
+        echo "All pacman dependencies are satisfied."
     else
         echo "Checking for required commands..."
-        for cmd in zsh git fastfetch; do
+        REQUIRED_CMDS="zsh git fastfetch fzf fd bat eza rg jq thefuck duf dust btop delta xh lsof curl nvim"
+        for cmd in $REQUIRED_CMDS; do
             if ! command_exists "$cmd"; then
                 echo "Error: $cmd is not installed. Please install it on your system."
                 exit 1
             fi
         done
+        echo "All commands are satisfied."
     fi
-    echo "All dependencies are satisfied."
+
+    # Install NVM separately if not already installed
+    if ! command_exists nvm; then
+        echo "Installing NVM (Node Version Manager)..."
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+        # Source nvm for the current session to make 'nvm' command available immediately
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+        [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+        echo "NVM installed."
+    else
+        echo "NVM is already installed."
+    fi
 }
 
 
