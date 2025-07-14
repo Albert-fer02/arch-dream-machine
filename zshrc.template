@@ -143,3 +143,5 @@ alias shutdown='echo "Usa systemctl poweroff si estás seguro"'
 alias salud='echo "💪 Respira, hidrátate y enfócate."'
 alias coffee='echo "☕ Tómate un cafecito y sigue."'
 alias motivacion='curl -s https://zenquotes.io/api/random | jq -r ".[0].q + " —" + .[0].a"'
+
+fastfetch
