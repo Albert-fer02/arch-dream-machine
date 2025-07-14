@@ -146,3 +146,5 @@ alias coffee='echo "☕ Tómate un cafecito y sigue."'
 alias motivacion='curl -s https://zenquotes.io/api/random | jq -r ".[0].q + " —" + .[0].a"'
 
 fastfetch
+autoload -U compinit && compinit
+autoload -U compinit && compinit
