@@ -148,3 +148,10 @@ alias motivacion='curl -s https://zenquotes.io/api/random | jq -r ".[0].q + " â€
 fastfetch
 autoload -U compinit && compinit
 autoload -U compinit && compinit
+
+# bun completions
+[ -s "/home/dreamcoder08/.bun/_bun" ] && source "/home/dreamcoder08/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
