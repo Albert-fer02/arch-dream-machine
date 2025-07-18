@@ -100,7 +100,7 @@ export LESS_TERMCAP_us=$'\e[1;32m'
 # ------------------------------------------------------------------------------
 
 # Reemplazos modernos (¡asegúrate de que los paquetes estén instalados!)
-alias cat='bat --style=plain --paging=never --theme="Catppuccin-frappe"' # Requiere el tema de bat
+alias cat='bat --style=plain --paging=never --theme=Catppuccin-frappe'
 alias ls='eza --icons --group-directories-first --git'
 alias ll='eza -l --icons --group-directories-first --git --time-style=long-iso'
 alias la='ll -a'

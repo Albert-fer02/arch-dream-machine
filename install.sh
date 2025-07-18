@@ -3,7 +3,12 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-# 🎨 Colors
+# 📁 Directorio base de configuración
+CONFIG_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+LOGFILE="$HOME/setup_arch_dream.log"
+exec > >(tee -a "$LOGFILE") 2>&1
+
+# 🎨 Colores
 AQUA='\033[38;5;51m'
 GREEN='\033[38;5;118m'
 CYAN='\033[38;5;87m'
@@ -29,8 +34,9 @@ spinner() {
     tput cnorm
 }
 
+# 🖼️ Banner
 print_banner() {
-    clear
+    [[ "${NO_CLEAR:-0}" -ne 1 ]] && clear
     echo -e "${BOLD}${AQUA}"
     cat << 'EOF'
 ╔════════════════════════════════════════════════════════════════════════════╗
@@ -38,50 +44,92 @@ print_banner() {
 ║                                                                            ║
 ║    ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄       ║
 ║    █   Crafted by: 𓂀 𝓓𝓻𝓮𝓪𝓶𝓬𝓸𝓭𝓮𝓻08 𓂀                                      █       ║
-║    ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀       ║
+║    ▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀       ║
 ╚════════════════════════════════════════════════════════════════════════════╝
 EOF
     echo -e "${RESET}"
 }
 
+# 📢 Logs
 log() { echo -e "${CYAN}[INFO]${RESET} $1"; }
 success() { echo -e "${GREEN}[SUCCESS]${RESET} $1"; }
 warn() { echo -e "${YELLOW}[WARN]${RESET} $1"; }
 error() { echo -e "${RED}[ERROR]${RESET} $1"; }
 
-install_dependencies() {
-    log "Checking and installing dependencies..."
-    sudo pacman -S --noconfirm --needed zsh fzf fd bat eza ripgrep jq zsh-autosuggestions zsh-syntax-highlighting zsh-completions thefuck duf dust btop xh lsof curl git neovim fastfetch
+# 📦 Verificar si pacman existe
+check_pacman() {
+    if ! command -v pacman &>/dev/null; then
+        error "Este script requiere pacman (Arch Linux o derivado). Abortando."
+        exit 1
+    fi
 }
 
-backup_configs() {
-    local BACKUP_DIR="$HOME/.config_backup_$(date +%Y%m%d_%H%M%S)"
-    log "Backing up configuration to $BACKUP_DIR"
-    mkdir -p "$BACKUP_DIR"
-    for file in .zshrc .p10k.zsh .config/fastfetch; do
-        [ -e "$HOME/$file" ] && mv "$HOME/$file" "$BACKUP_DIR/"
+# 📦 Instalar dependencias
+install_dependencies() {
+    log "Verificando e instalando dependencias necesarias..."
+    local packages=(
+        zsh fzf fd bat eza ripgrep jq zsh-autosuggestions
+        zsh-syntax-highlighting zsh-completions thefuck
+        duf dust btop xh lsof curl git neovim fastfetch
+    )
+
+    for pkg in "${packages[@]}"; do
+        if ! pacman -Q "$pkg" &>/dev/null; then
+            log "Instalando: $pkg"
+            sudo pacman -S --noconfirm --needed "$pkg"
+        else
+            success "$pkg ya está instalado."
+        fi
     done
 }
 
+# 🗂️ Backup
+backup_configs() {
+    local BACKUP_DIR="$HOME/.config_backup_$(date +%Y%m%d_%H%M%S)"
+    log "Respaldando configuraciones en: $BACKUP_DIR"
+    mkdir -p "$BACKUP_DIR"
+    for file in .zshrc .p10k.zsh .config/fastfetch; do
+        if [ -e "$HOME/$file" ]; then
+            mv "$HOME/$file" "$BACKUP_DIR/"
+            success "Respaldo de $file realizado."
+        fi
+    done
+}
+
+# ⚡ Oh My Zsh + Powerlevel10k
 setup_ohmyzsh_p10k() {
     if [ ! -d "$HOME/.oh-my-zsh" ]; then
-        log "Installing Oh My Zsh..."
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+        log "Instalando Oh My Zsh..."
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended || {
+            error "Fallo en la instalación de Oh My Zsh."
+            exit 1
+        }
+    else
+        success "Oh My Zsh ya está instalado."
     fi
-    if [ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k" ]; then
-        log "Installing Powerlevel10k..."
-        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
+
+    local theme_dir="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
+    if [ ! -d "$theme_dir" ]; then
+        log "Instalando Powerlevel10k..."
+        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$theme_dir" || {
+            error "Fallo al clonar Powerlevel10k."
+            exit 1
+        }
+    else
+        success "Powerlevel10k ya está instalado."
     fi
 }
 
+# 🔗 Symlinks
 link_configs() {
-    log "Creating symbolic links..."
-    ln -sf "$CONFIG_DIR/zshrc.template" "$HOME/.zshrc"
-    ln -sf "$CONFIG_DIR/p10k.zsh.template" "$HOME/.p10k.zsh"
+    log "Creando enlaces simbólicos..."
+    ln -sf "$CONFIG_DIR/zshrc.template" "$HOME/.zshrc" || warn "Fallo al enlazar .zshrc"
+    ln -sf "$CONFIG_DIR/p10k.zsh.template" "$HOME/.p10k.zsh" || warn "Fallo al enlazar .p10k.zsh"
     mkdir -p "$HOME/.config"
-    ln -sfn "$CONFIG_DIR/fastfetch" "$HOME/.config/fastfetch"
+    ln -sfn "$CONFIG_DIR/fastfetch" "$HOME/.config/fastfetch" || warn "Fallo al enlazar fastfetch"
 }
 
+# 🎊 Final
 finish_banner() {
     echo -e "${GREEN}"
     cat << 'EOF'
@@ -94,12 +142,13 @@ EOF
     echo -e "${RESET}"
 }
 
+# 🏁 Main
 main() {
-    CONFIG_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
     print_banner
+    check_pacman
 
     (install_dependencies && backup_configs && setup_ohmyzsh_p10k && link_configs) &
-    spinner $! "Applying your personalized Zsh + Fastfetch setup..."
+    spinner $! "Aplicando tu configuración personalizada de Zsh + Fastfetch..."
 
     finish_banner
     success "Setup completo. Reinicia tu terminal para aplicar los cambios."
