@@ -1,33 +1,27 @@
-🚀 ARCH DREAM MACHINE
+# 🚀 ARCH DREAM MACHINE
 
-<!-- Insignias (Badges) - ¡Añaden información rápida y profesionalidad! -->
+![Built With](https://img.shields.io/badge/Built%20With-Zsh%20%7C%20Oh%20My%20Zsh%20%7C%20Powerlevel10k%20%7C%20Kitty%20%7C%20Bat%20%7C%20Fastfetch-blueviolet?style=for-the-badge&logo=zsh&logoColor=white)
 
-    🛠️ Creado con 💙 por: 𓂀 𝓓𝓻𝓮𝓪𝓶𝓬𝓸𝓭𝓮𝓻08 𓂀
+> 🛠️ Creado con 💙 por: 𓂀 `Dreamcoder08` 𓂀
 
+## ✨ Descripción
 
-✨ Descripción
+**ARCH DREAM MACHINE** es un script de configuración minimalista y potente diseñado para transformar y personalizar tu entorno de línea de comandos en **Arch Linux** y sus derivados. Este script automatiza la configuración de un shell Zsh altamente optimizado, proporcionando una experiencia de terminal moderna, eficiente y visualmente atractiva desde el primer momento.
 
-ARCH DREAM MACHINE es un setup script minimalista y potente diseñado para transformar y personalizar tu entorno de línea de comandos en Arch Linux y sus derivados. Este script automatiza la configuración de un shell Zsh altamente optimizado, proporcionando una experiencia de terminal moderna y eficiente desde el primer momento.
+### Incluye:
 
-Incluye:
+-   **Zsh + Oh My Zsh:** Un framework robusto para la gestión de tu configuración de Zsh.
+-   **Powerlevel10k:** Un tema increíblemente rápido y personalizable para Zsh, con un aspecto visual impresionante.
+-   **Plugins Esenciales:**
+    -   `zsh-autosuggestions`: Sugerencias de comandos basadas en tu historial (cargado directamente).
+    -   `zsh-syntax-highlighting`: Resaltado de sintaxis para comandos en tiempo real (cargado directamente).
+    -   Completions mejoradas: Autocompletación avanzada para comandos y argumentos.
+-   **Kitty Terminal:** Configuración optimizada con temas personalizados para una experiencia visual superior.
+-   **Bat:** Un `cat` con superpoderes, con resaltado de sintaxis y paginación, integrado con temas Catppuccin.
+-   **Fastfetch Personalizado:** Una herramienta de información del sistema rápida y estéticamente agradable.
+-   **Herramientas Modernas de CLI:** Un conjunto de utilidades de línea de comandos de última generación para maximizar tu productividad diaria (e.g., `eza`, `rg`, `fd`, `duf`, `dust`, `btop`, `xh`).
 
-    Zsh + Oh My Zsh: Un framework robusto para la gestión de tu configuración Zsh.
-
-    Powerlevel10k theme: Un tema increíblemente rápido y personalizable para Zsh, con un aspecto visual impresionante.
-
-    Plugins esenciales:
-
-        zsh-autosuggestions: Sugerencias de comandos basadas en tu historial.
-
-        zsh-syntax-highlighting: Resaltado de sintaxis para comandos en tiempo real.
-
-        zsh-completions: Mejoras en la autocompletación de comandos.
-
-    Fastfetch personalizado: Una herramienta de información del sistema rápida y estéticamente agradable.
-
-    Herramientas modernas de CLI: Para maximizar tu productividad diaria.
-
-🎨 Características
+## 🎨 Características
 
 ✅ Instalación automática de dependencias vía pacman, asegurando que tengas todo lo necesario.
 
@@ -38,51 +32,61 @@ Incluye:
 ✅ Creación inteligente de enlaces simbólicos para configuraciones personalizadas, manteniendo tu HOME limpio.
 
 ✅ Interfaz interactiva con un banner gráfico y un spinner animado para una experiencia de usuario agradable.
-⚙️ Requisitos
+## ⚙️ Requisitos
 
-Para ejecutar ARCH DREAM MACHINE, asegúrate de tener:
+Para ejecutar **ARCH DREAM MACHINE**, asegúrate de tener:
 
-    Arch Linux o una distribución derivada (Manjaro, EndeavourOS, etc.).
+-   **Arch Linux** o una distribución derivada (Manjaro, EndeavourOS, etc.).
+-   `sudo` configurado y permisos para instalar paquetes.
+-   Conexión a internet activa para descargar las dependencias y los componentes.
 
-    sudo configurado y permisos para instalar paquetes.
+## 🚀 Instalación
 
-    Conexión a internet activa para descargar las dependencias y los componentes.
+Sigue estos sencillos pasos para poner en marcha tu **ARCH DREAM MACHINE**:
 
-🚀 Instalación
+1.  **Clona el repositorio:**
 
-Sigue estos sencillos pasos para poner en marcha tu ARCH DREAM MACHINE:
-
-    Clona el repositorio:
-
+    ```bash
     git clone https://github.com/tuusuario/arch-dream-machine.git
+    ```
 
-    (Asegúrate de reemplazar tuusuario con tu nombre de usuario de GitHub si este es tu repositorio real).
+    *(Asegúrate de reemplazar `tuusuario` con tu nombre de usuario de GitHub si este es tu repositorio real).* Si ya lo tienes clonado, simplemente navega a su directorio.
 
-    Navega al directorio del proyecto:
+2.  **Navega al directorio del proyecto:**
 
+    ```bash
     cd arch-dream-machine
+    ```
 
-    Haz el script ejecutable:
+3.  **Haz el script ejecutable:**
 
+    ```bash
     chmod +x install.sh
+    ```
 
-    Ejecuta el script de instalación:
+4.  **Ejecuta el script de instalación:**
 
+    ```bash
     ./install.sh
+    ```
 
-    ⚡ ¡Importante! Al finalizar la instalación, reinicia tu terminal (cierra y vuelve a abrir) para que todos los cambios surtan efecto y disfrutes de tu nuevo entorno Zsh.
+    > ⚡ **¡Importante!** Al finalizar la instalación, **reinicia tu terminal** (cierra y vuelve a abrir) para que todos los cambios surtan efecto y disfrutes de tu nuevo entorno.
 
-🛠️ Uso y Personalización
+## 🛠️ Uso y Personalización
 
-Una vez instalado, tu entorno Zsh estará listo para usar. Puedes personalizar aún más tu configuración editando los siguientes archivos:
+Una vez instalado, tu entorno estará listo para usar. Puedes personalizar aún más tu configuración editando los siguientes archivos:
 
-    ~/.zshrc: El archivo principal de configuración de Zsh. Aquí puedes añadir tus alias, funciones y variables de entorno.
+-   `~/.zshrc`: El archivo principal de configuración de Zsh. Aquí puedes añadir tus alias, funciones y variables de entorno. Este archivo es un enlace simbólico a `zshrc.template` en este repositorio.
 
-    ~/.p10k.zsh: El archivo de configuración de Powerlevel10k. Ejecuta p10k configure en tu terminal para iniciar el asistente de configuración visual y adaptar el tema a tu gusto.
+-   `~/.p10k.zsh`: El archivo de configuración de Powerlevel10k. Ejecuta `p10k configure` en tu terminal para iniciar el asistente de configuración visual y adaptar el tema a tu gusto. Este archivo es un enlace simbólico a `p10k.zsh.template` en este repositorio.
 
-    ~/.config/fastfetch/config.jsonc: Personaliza la salida de fastfetch editando este archivo JSON.
+-   `~/.config/fastfetch/config.jsonc`: Personaliza la salida de `fastfetch` editando este archivo JSON. Es un enlace simbólico a `fastfetch/config.jsonc` en este repositorio.
 
-📸 Vistas Previas
+-   `~/.config/kitty/kitty.conf`: Configura tu terminal Kitty. Este archivo es un enlace simbólico a `kitty/kitty.conf` en este repositorio. Puedes cambiar el tema incluyendo otro archivo de la carpeta `kitty/themes/`.
+
+-   `BAT_THEME`: Para cambiar el tema de `bat`, edita la variable `BAT_THEME` en tu `~/.zshrc` (o `zshrc.template`) con el nombre exacto del tema (ej. `export BAT_THEME="Catppuccin Macchiato"`). Puedes ver los temas disponibles con `bat --list-themes`.
+
+## 📸 Vistas Previas
 
 Aquí puedes ver cómo luce ARCH DREAM MACHINE en acción:
 
@@ -91,38 +95,44 @@ Una captura de pantalla de tu terminal Zsh con Powerlevel10k y Fastfetch.
 Una captura de pantalla mostrando las autosugerencias y el resaltado de sintaxis.
 
 (Nota: Reemplaza los placeholders `` con imágenes reales de tu setup para un impacto visual máximo.)
-🗂️ Estructura del Proyecto
+## 🗂️ Estructura del Proyecto
 
+```
 arch-dream-machine/
 │
 ├── install.sh           # Script principal de instalación y configuración.
 ├── zshrc.template       # Plantilla base para la configuración de Zsh (~/.zshrc).
 ├── p10k.zsh.template    # Plantilla de configuración para Powerlevel10k (~/.p10k.zsh).
-└── fastfetch/           # Directorio que contiene la configuración personalizada de Fastfetch.
-    └── config.jsonc     # Archivo de configuración de Fastfetch.
+├── fastfetch/           # Directorio que contiene la configuración personalizada de Fastfetch.
+│   └── config.jsonc     # Archivo de configuración de Fastfetch.
+└── kitty/               # Directorio que contiene la configuración de Kitty.
+    ├── kitty.conf       # Archivo de configuración principal de Kitty.
+    └── themes/          # Temas de color para Kitty.
+        ├── colors-matugen.conf
+        ├── colors-wallust.conf
+        └── colors-dreamcoder.conf
+```
 
-🤝 Contribución
+## 🤝 Contribución
 
-¡Las contribuciones son bienvenidas! Si tienes ideas para mejorar , encuentras un error o quieres añadir nuevas funcionalidades, por favor:
+¡Las contribuciones son bienvenidas! Si tienes ideas para mejorar, encuentras un error o quieres añadir nuevas funcionalidades, por favor:
 
-    Haz un "fork" de este repositorio.
-
-    Crea una nueva rama (git checkout -b feature/AmazingFeature).
-
-    Realiza tus cambios y haz "commit" (git commit -m 'Add some AmazingFeature').
-
-    Sube tus cambios (git push origin feature/AmazingFeature).
-
-    Abre un "Pull Request".
+-   Haz un "fork" de este repositorio.
+-   Crea una nueva rama (`git checkout -b feature/AmazingFeature`).
+-   Realiza tus cambios y haz "commit" (`git commit -m 'Add some AmazingFeature'`).
+-   Sube tus cambios (`git push origin feature/AmazingFeature`).
+-   Abre un "Pull Request".
 
 
-🧿 Licencia
+## 🧿 Licencia
 
-Este proyecto está bajo la Licencia MIT. Consulta el archivo LICENSE para más detalles.
+Este proyecto está bajo la Licencia MIT. Consulta el archivo `LICENSE` para más detalles.
 
-MIT License © 𓂀 dreamcoder08
+MIT License © 𓂀 `dreamcoder08`
 
-    Crafted with passion for customization lovers 💻✨
+---
 
-    ¡Si te gusta este proyecto, por favor considera darle una estrella ⭐ en GitHub!
+> Crafted with passion for customization lovers 💻✨
+
+> ¡Si te gusta este proyecto, por favor considera darle una estrella ⭐ en GitHub!
 
