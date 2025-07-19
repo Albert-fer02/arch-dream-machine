@@ -1,7 +1,8 @@
 # 🚀 ARCH DREAM MACHINE
 
 ![Built With](https://img.shields.io/badge/Built%20With-Zsh%20%7C%20Oh%20My%20Zsh%20%7C%20Powerlevel10k%20%7C%20Kitty%20%7C%20Bat%20%7C%20Fastfetch-blueviolet?style=for-the-badge&logo=zsh&logoColor=white)
-
+## 📸 Vistas Previas
+![alt text](image.png)
 > 🛠️ Creado con 💙 por: 𓂀 `Dreamcoder08` 𓂀
 
 ## ✨ Descripción
@@ -82,11 +83,6 @@ Una vez instalado, tu entorno estará listo para usar. Puedes personalizar aún 
 -   `~/.config/kitty/kitty.conf`: Configura tu terminal Kitty. Este archivo es un enlace simbólico a `kitty/kitty.conf` en este repositorio. Puedes cambiar el tema incluyendo otro archivo de la carpeta `kitty/themes/`.
 
 -   `BAT_THEME`: Para cambiar el tema de `bat`, edita la variable `BAT_THEME` en tu `~/.zshrc` (o `zshrc.template`) con el nombre exacto del tema (ej. `export BAT_THEME="Catppuccin Macchiato"`). Puedes ver los temas disponibles con `bat --list-themes`.
-
-## 📸 Vistas Previas
-
-Aquí puedes ver cómo luce ARCH DREAM MACHINE en acción:
-![alt text](image.png)
 
 ## 🗂️ Estructura del Proyecto
 
