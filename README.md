@@ -38,24 +38,21 @@ Para ejecutar **ARCH DREAM MACHINE**, asegúrate de tener:
 
 -   **Arch Linux** o una distribución derivada (Manjaro, EndeavourOS, etc.).
 -   `sudo` configurado y permisos para instalar paquetes.
--   Conexión a internet activa para descargar las dependencias y los componentes.
 
 ## 🚀 Instalación
 
-Sigue estos sencillos pasos para poner en marcha tu **ARCH DREAM MACHINE**:
+Sigue estos Spasos para poner en marcha tu **ARCH DREAM MACHINE**:
 
 1.  **Clona el repositorio:**
 
     ```bash
-    git clone https://github.com/tuusuario/arch-dream-machine.git
+    git clone https://github.com/Albert-fer02/zsh_custom_config.git
     ```
-
-    *(Asegúrate de reemplazar `tuusuario` con tu nombre de usuario de GitHub si este es tu repositorio real).* Si ya lo tienes clonado, simplemente navega a su directorio.
 
 2.  **Navega al directorio del proyecto:**
 
     ```bash
-    cd arch-dream-machine
+    cd zsh_custom_config
     ```
 
 3.  **Haz el script ejecutable:**
