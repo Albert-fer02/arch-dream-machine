@@ -123,10 +123,14 @@ setup_ohmyzsh_p10k() {
 # 🔗 Symlinks
 link_configs() {
     log "Creando enlaces simbólicos..."
+    # Zsh & Powerlevel10k
     ln -sf "$CONFIG_DIR/zshrc.template" "$HOME/.zshrc" || warn "Fallo al enlazar .zshrc"
     ln -sf "$CONFIG_DIR/p10k.zsh.template" "$HOME/.p10k.zsh" || warn "Fallo al enlazar .p10k.zsh"
+    
+    # Fastfetch & Kitty
     mkdir -p "$HOME/.config"
     ln -sfn "$CONFIG_DIR/fastfetch" "$HOME/.config/fastfetch" || warn "Fallo al enlazar fastfetch"
+    ln -sfn "$CONFIG_DIR/kitty" "$HOME/.config/kitty" || warn "Fallo al enlazar kitty"
 }
 
 # 🎊 Final
