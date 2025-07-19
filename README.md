@@ -86,12 +86,8 @@ Una vez instalado, tu entorno estará listo para usar. Puedes personalizar aún 
 ## 📸 Vistas Previas
 
 Aquí puedes ver cómo luce ARCH DREAM MACHINE en acción:
+![alt text](image.png)
 
-Una captura de pantalla de tu terminal Zsh con Powerlevel10k y Fastfetch.
-
-Una captura de pantalla mostrando las autosugerencias y el resaltado de sintaxis.
-
-(Nota: Reemplaza los placeholders `` con imágenes reales de tu setup para un impacto visual máximo.)
 ## 🗂️ Estructura del Proyecto
 
 ```
@@ -104,10 +100,6 @@ arch-dream-machine/
 │   └── config.jsonc     # Archivo de configuración de Fastfetch.
 └── kitty/               # Directorio que contiene la configuración de Kitty.
     ├── kitty.conf       # Archivo de configuración principal de Kitty.
-    └── themes/          # Temas de color para Kitty.
-        ├── colors-matugen.conf
-        ├── colors-wallust.conf
-        └── colors-dreamcoder.conf
 ```
 
 ## 🤝 Contribución
