@@ -2,7 +2,8 @@
 
 ![Built With](https://img.shields.io/badge/Built%20With-Zsh%20%7C%20Oh%20My%20Zsh%20%7C%20Powerlevel10k%20%7C%20Kitty%20%7C%20Bat%20%7C%20Fastfetch-blueviolet?style=for-the-badge&logo=zsh&logoColor=white)
 ## 📸 Vistas Previas
-![alt text](image.png)
+<img width="945" height="769" alt="image" src="https://github.com/user-attachments/assets/a4e9b4b8-1017-48aa-923b-68051a456596" />
+
 > 🛠️ Creado con 💙 por: 𓂀 `Dreamcoder08` 𓂀
 
 ## ✨ Descripción
