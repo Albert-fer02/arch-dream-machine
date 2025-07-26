@@ -140,6 +140,8 @@ link_configs() {
     # Nano
     mkdir -p "$HOME/.nano/backups" || warn "Fallo al crear directorio de backups de Nano"
     ln -sf "$CONFIG_DIR/nano_cuztom/nanorc.conf" "$HOME/.nanorc" || warn "Fallo al enlazar .nanorc"
+    
+    # Hacer ejecutables los scripts de cambio de tema
 }
 
 # 🎊 Final
