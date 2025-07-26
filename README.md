@@ -20,7 +20,8 @@
 ## 🎨 Preview
 
 <div align="center">
-<img width="945" height="769" alt="ARCH DREAM MACHINE Terminal Preview" src="https://github.com/user-attachments/assets/a4e9b4b8-1017-48aa-923b-68051a456596" />
+<img width="946" height="817" alt="image" src="https://github.com/user-attachments/assets/0fbf24bb-253b-46c8-a92b-c1406cfee2ba" />
+
 
 *Experience the future of terminal aesthetics*
 </div>
