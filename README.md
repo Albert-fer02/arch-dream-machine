@@ -1,344 +1,277 @@
-# 🌟 ARCH DREAM MACHINE
 
-<div align="center">
+<h1 align="center" style="font-family: 'Fira Code', monospace; font-weight: bold; font-size: 3.5rem;">
+  🌌 <span style="color:#7dcfff;">ARCH DREAM MACHINE</span> 🌌
+</h1>
 
-![Built With](https://img.shields.io/badge/Built%20With-Zsh%20%7C%20Oh%20My%20Zsh%20%7C%20Powerlevel10k%20%7C%20Kitty%20%7C%20Bat%20%7C%20Fastfetch-blueviolet?style=for-the-badge&logo=zsh&logoColor=white)
+<p align="center">
+  <img src="https://img.shields.io/badge/Built%20With-Zsh%20|%20Powerlevel10k%20|%20Kitty%20|%20Fastfetch-blueviolet?style=for-the-badge&logo=arch-linux&logoColor=white" />
+</p>
 
-[![GitHub Stars](https://img.shields.io/github/stars/Albert-fer02/zsh_custom_config?style=flat-square&color=ffd700)](https://github.com/Albert-fer02/zsh_custom_config/stargazers)
-[![GitHub Issues](https://img.shields.io/github/issues/Albert-fer02/zsh_custom_config?style=flat-square&color=red)](https://github.com/Albert-fer02/zsh_custom_config/issues)
-[![GitHub Forks](https://img.shields.io/github/forks/Albert-fer02/zsh_custom_config?style=flat-square&color=blue)](https://github.com/Albert-fer02/zsh_custom_config/network)
-[![License](https://img.shields.io/github/license/Albert-fer02/zsh_custom_config?style=flat-square&color=green)](LICENSE)
-
-**Transform your terminal into a modern, powerful development environment**
-
-*One script to rule them all* ✨
-
-</div>
-
----
-
-## 🎨 Preview
-
-<div align="center">
-<img width="946" height="817" alt="image" src="https://github.com/user-attachments/assets/0fbf24bb-253b-46c8-a92b-c1406cfee2ba" />
-
-
-*Experience the future of terminal aesthetics*
-</div>
+<p align="center">
+  <a href="https://github.com/Albert-fer02/zsh_custom_config/stargazers">
+    <img src="https://img.shields.io/github/stars/Albert-fer02/zsh_custom_config?style=flat-square&color=ffd700" alt="Stars">
+  </a>
+  <a href="https://github.com/Albert-fer02/zsh_custom_config/issues">
+    <img src="https://img.shields.io/github/issues/Albert-fer02/zsh_custom_config?style=flat-square&color=red" alt="Issues">
+  </a>
+  <a href="https://github.com/Albert-fer02/zsh_custom_config/network">
+    <img src="https://img.shields.io/github/forks/Albert-fer02/zsh_custom_config?style=flat-square&color=blue" alt="Forks">
+  </a>
+  <a href="LICENSE">
+    <img src="https://img.shields.io/github/license/Albert-fer02/zsh_custom_config?style=flat-square&color=00e676" alt="License">
+  </a>
+</p>
 
 ---
 
-## 🚀 What is ARCH DREAM MACHINE?
-
-**ARCH DREAM MACHINE** is a meticulously crafted, one-click terminal transformation script designed for **Arch Linux** enthusiasts who refuse to settle for mediocrity. This isn't just another dotfiles repository—it's a complete terminal ecosystem that bridges the gap between functionality and beauty.
-
-### 🎯 Philosophy
-
-Born from the belief that your development environment should inspire creativity, not hinder it. Every configuration choice has been carefully curated to provide maximum productivity while maintaining visual elegance.
+> 🧠 *"Imagina un entorno terminal que no solo funcione... sino que te inspire."*  
+> 💻 Este script transforma Arch Linux en una obra de arte funcional.  
+> ⚡ Un solo comando. Una nueva era para tu terminal.
 
 ---
 
-## ✨ Features at a Glance
+## 🖼️ Preview
 
-<table>
-<tr>
-<td width="50%">
-
-### 🔧 **Core Components**
-- **Zsh + Oh My Zsh** - Robust shell framework
-- **Powerlevel10k** - Lightning-fast, customizable theme
-- **Kitty Terminal** - GPU-accelerated terminal emulator
-- **Bat** - Cat with syntax highlighting superpowers
-- **Fastfetch** - System information with style
-
-</td>
-<td width="50%">
-
-### 🎨 **Enhanced Experience**
-- **Smart Autosuggestions** - AI-like command predictions
-- **Syntax Highlighting** - Real-time command validation
-- **Modern CLI Tools** - Next-gen utilities (eza, rg, fd, etc.)
-- **Catppuccin Themes** - Cohesive color palette across tools
-- **Zero Configuration** - Works perfectly out of the box
-
-</td>
-</tr>
-</table>
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/0fbf24bb-253b-46c8-a92b-c1406cfee2ba" alt="Preview" width="850" />
+  <br>
+  <i>⚙️ Experiencia visual futurista directamente en tu terminal</i>
+</p>
 
 ---
 
-## 🛠️ Included Tools & Plugins
+## 🔥 ¿Qué es ARCH DREAM MACHINE?
 
-<div align="center">
-
-| Category | Tools | Purpose |
-|----------|-------|---------|
-| **Shell Enhancement** | `zsh-autosuggestions`, `zsh-syntax-highlighting` | Smart completions & syntax validation |
-| **File Operations** | `eza`, `bat`, `fd`, `rg` | Modern file listing, viewing & searching |
-| **System Monitoring** | `btop`, `dust`, `duf` | Resource monitoring & disk usage |
-| **Network & HTTP** | `xh` | Modern HTTP client |
-| **Terminal Emulator** | `kitty` | GPU-accelerated, feature-rich terminal |
-
-</div>
+**ARCH DREAM MACHINE** es más que una configuración de Zsh. Es una arquitectura visual + funcional pensada para devs creativos como tú. Un ecosistema completo, ligero, moderno, rápido, y listo para usar.
 
 ---
 
-## 📋 Prerequisites
+## ✨ Características Principales
 
-<div align="center">
-
-| Requirement | Status | Note |
-|-------------|--------|------|
-| **Arch Linux** | ✅ Required | Or Arch-based distros (Manjaro, EndeavourOS) |
-| **sudo privileges** | ✅ Required | For package installation |
-| **Git** | ✅ Required | Usually pre-installed |
-| **Internet connection** | ✅ Required | For downloading dependencies |
-
-</div>
+| 🧩 Core | 🎨 Estética Pro |
+|--------|-----------------|
+| Zsh + Oh My Zsh | Sugerencias inteligentes y resaltado en tiempo real |
+| Powerlevel10k | Tema totalmente personalizable y ultra rápido |
+| Kitty Terminal | Aceleración GPU, hermoso y versátil |
+| Bat, eza, fd, rg | Reemplazos modernos para tus comandos CLI |
+| Fastfetch | Info del sistema, pero con flow Catppuccin |
 
 ---
 
-## 🚀 Quick Start
+## 🧰 Plugins y Herramientas Incluidas
 
-### Option 1: One-Line Install (Recommended)
+| Categoría | Herramientas | Propósito |
+|----------|--------------|-----------|
+| Shell Enhancements | `zsh-autosuggestions`, `zsh-syntax-highlighting` | UX inteligente en consola |
+| Arch CLI Suite | `bat`, `eza`, `fd`, `rg` | Flujo ágil de búsqueda, lectura y exploración |
+| Monitorización | `btop`, `dust`, `duf` | Métricas limpias y visuales en tiempo real |
+| Networking | `xh` | Reemplazo moderno de `curl` |
+| Terminal | `kitty` | El emulador más poderoso del juego |
+
+---
+
+## 🚀 Instalación Express
+
+### ☄️ Un solo comando:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/Albert-fer02/zsh_custom_config/main/install.sh | bash
-```
+bash <(curl -fsSL https://raw.githubusercontent.com/Albert-fer02/zsh_custom_config/main/install.sh)
+````
 
-### Option 2: Manual Installation
+### 🛠 Manual (alternativa):
 
 ```bash
-# Clone the repository
 git clone https://github.com/Albert-fer02/zsh_custom_config.git
-
-# Navigate to project directory
 cd zsh_custom_config
-
-# Make script executable
 chmod +x install.sh
-
-# Run the installation
 ./install.sh
 ```
 
-### 🔄 Post-Installation
-
-> **⚡ Important:** Restart your terminal after installation to activate all changes.
+🔁 **Reinicia tu terminal** para aplicar los cambios.
 
 ---
 
-## 🎨 Customization Guide
+## 🧪 Personalización Total
 
-### 🎯 Quick Customization
+| Elemento      | Archivo                            | Acción                      |
+| ------------- | ---------------------------------- | --------------------------- |
+| Powerlevel10k | `~/.p10k.zsh`                      | `p10k configure`            |
+| Zsh Settings  | `~/.zshrc`                         | Edita, ajusta y reconfigura |
+| Kitty         | `~/.config/kitty/kitty.conf`       | Incluye tus temas favoritos |
+| Fastfetch     | `~/.config/fastfetch/config.jsonc` | Personaliza el banner info  |
 
-| Component | Configuration File | Command to Customize |
-|-----------|-------------------|---------------------|
-| **Powerlevel10k Theme** | `~/.p10k.zsh` | `p10k configure` |
-| **Zsh Settings** | `~/.zshrc` | `nano ~/.zshrc` |
-| **Kitty Terminal** | `~/.config/kitty/kitty.conf` | `kitty --config ~/.config/kitty/kitty.conf` |
-| **Fastfetch Display** | `~/.config/fastfetch/config.jsonc` | `nano ~/.config/fastfetch/config.jsonc` |
+---
 
-### 🎨 Theme Switching
-
-<details>
-<summary><b>Change Bat Theme</b></summary>
-
-1. List available themes:
-   ```bash
-   bat --list-themes
-   ```
-
-2. Set your preferred theme in `~/.zshrc`:
-   ```bash
-   export BAT_THEME="Catppuccin Mocha"
-   ```
-</details>
+## 🎨 Temas y Colores
 
 <details>
-<summary><b>Kitty Theme Options</b></summary>
+<summary><b>🎨 Cambiar tema en Bat</b></summary>
 
-Explore themes in `kitty/` directory and include them in your `kitty.conf`:
 ```bash
-include ./colors-dreamcoder.conf
+bat --list-themes
+export BAT_THEME="Catppuccin Mocha" # Agrega en tu ~/.zshrc
 ```
+
+</details>
+
+<details>
+<summary><b>🎨 Cambiar tema en Kitty</b></summary>
+
+Incluye tu color personalizado en el `kitty.conf`:
+
+```bash
+include ./themes/colors-dreamcoder.conf
+```
+
 </details>
 
 ---
 
-## 📁 Project Structure
+## 🗂 Estructura del Proyecto
 
-```
+```bash
 arch-dream-machine/
-├── 📜 install.sh              # Main installation script
-├── 🔧 zshrc.template          # Zsh configuration template
-├── 🎨 p10k.zsh.template       # Powerlevel10k theme configuration
-├── 📊 fastfetch/              # System info configuration
-│   └── config.jsonc
-├── 🖥️  kitty/                 # Terminal emulator settings
-│   ├── kitty.conf
-│   └── themes/                # Color scheme collection
-├── 📚 docs/                   # Documentation
-└── 🛡️  LICENSE                # MIT License
+├── install.sh
+├── zshrc.template
+├── p10k.zsh.template
+├── fastfetch/config.jsonc
+├── kitty/kitty.conf
+├── kitty/themes/
+├── docs/
+└── LICENSE
 ```
 
 ---
 
-## 🔧 Advanced Configuration
+## 🧠 Tips Avanzados
 
 <details>
-<summary><b>🎯 Performance Tuning</b></summary>
-
-For optimal performance, consider these tweaks in your `~/.zshrc`:
+<summary><b>⏱ Acelera Zsh</b></summary>
 
 ```bash
-# Reduce startup time
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 COMPLETION_WAITING_DOTS="true"
-
-# Optimize history
 HISTSIZE=50000
 SAVEHIST=50000
 ```
+
 </details>
 
 <details>
-<summary><b>🔌 Adding Custom Plugins</b></summary>
-
-Add plugins to your `~/.zshrc`:
+<summary><b>⚙️ Agrega tus plugins</b></summary>
 
 ```bash
 plugins=(
-    git
-    zsh-autosuggestions
-    zsh-syntax-highlighting
-    your-custom-plugin
+  git
+  zsh-autosuggestions
+  zsh-syntax-highlighting
+  your-plugin-here
 )
 ```
+
 </details>
 
 ---
 
-## 🤝 Contributing
+## 🤝 Contribuciones
 
-We welcome contributions from the community! Here's how you can help:
+¿Ideas? ¿Errores? ¿Nuevas herramientas?
 
 <details>
-<summary><b>🐛 Report Issues</b></summary>
+<summary><b>🐞 Reportar un bug</b></summary>
 
-Found a bug? Please [open an issue](https://github.com/Albert-fer02/zsh_custom_config/issues) with:
-- Your OS version and terminal emulator
-- Steps to reproduce the issue
-- Expected vs actual behavior
-- Screenshots if applicable
+* Abre un [issue aquí](https://github.com/Albert-fer02/zsh_custom_config/issues)
+* Describe el problema, tu terminal, y cómo reproducirlo.
+
 </details>
 
 <details>
-<summary><b>✨ Suggest Features</b></summary>
+<summary><b>🌱 Proponer mejoras</b></summary>
 
-Have an idea? We'd love to hear it! Open a [feature request](https://github.com/Albert-fer02/zsh_custom_config/issues) with:
-- Clear description of the feature
-- Use case and benefits
-- Possible implementation approach
+* ¿Tienes una idea épica? Cuéntala y la integramos.
+
 </details>
 
 <details>
-<summary><b>🔧 Submit Code</b></summary>
+<summary><b>💻 Contribuir con código</b></summary>
 
-Ready to contribute code?
+1. Haz fork del repo
+2. Crea una rama nueva
+3. Envía el PR con descripción
 
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Make your changes and test thoroughly
-4. Commit with descriptive messages: `git commit -m 'Add amazing feature'`
-5. Push to your fork: `git push origin feature/amazing-feature`
-6. Open a Pull Request with a detailed description
 </details>
 
 ---
 
-## 📝 Changelog
+## 📜 Changelog
 
 <details>
-<summary><b>View Release History</b></summary>
+<summary><b>Ver actualizaciones recientes</b></summary>
 
-### v2.1.0 - Latest
-- 🔧 Fixed Kitty color configuration files.
-- 🗑️ Removed theme switching scripts and related configurations.
-- 📚 Updated README.md to reflect the changes.
+* v2.1.0 → Mejoras en colores + docs actualizada
+* v2.0.0 → Catppuccin, optimización, manejo de errores
+* v1.0.0 → Setup base con Powerlevel10k, Zsh y Kitty
 
-### v2.0.0
-- ✨ Added Catppuccin theme integration
-- 🚀 Performance optimizations
-- 🔧 Improved error handling
-- 📚 Enhanced documentation
-
-### v1.5.0
-- 🎨 Added Kitty terminal configuration
-- 🔌 New CLI tools integration
-- 🐛 Bug fixes and stability improvements
-
-### v1.0.0
-- 🎉 Initial release
-- ⚡ Basic Zsh + Oh My Zsh setup
-- 🎨 Powerlevel10k integration
 </details>
 
 ---
 
-## 🆘 Troubleshooting
+## 🆘 Ayuda rápida
 
 <details>
-<summary><b>Common Issues & Solutions</b></summary>
+<summary><b>🎨 Tema roto</b></summary>
 
-### Theme not loading correctly
 ```bash
-# Reload your configuration
 source ~/.zshrc
-
-# Or restart your terminal
+# o simplemente reinicia
 ```
 
-### Fonts looking broken
+</details>
+
+<details>
+<summary><b>🧩 Fuentes rotas</b></summary>
+
 ```bash
-# Install required fonts
 sudo pacman -S ttf-meslo-nerd
 ```
 
-### Performance issues
+</details>
+
+<details>
+<summary><b>🐢 Terminal lento</b></summary>
+
 ```bash
-# Check for conflicting plugins
-zsh -xvs
+zsh -xvs # Revisa plugins en conflicto
 ```
+
 </details>
 
 ---
 
-## 🙏 Acknowledgments
+## 🙌 Créditos
 
-This project stands on the shoulders of giants. Special thanks to:
+Inspirado por:
 
-- [Oh My Zsh](https://ohmyz.sh/) community
-- [Powerlevel10k](https://github.com/romkatv/powerlevel10k) by Roman Perepelitsa
-- [Catppuccin](https://catppuccin.com/) theme creators
-- The Arch Linux community
+* [Oh My Zsh](https://ohmyz.sh/)
+* [Powerlevel10k](https://github.com/romkatv/powerlevel10k)
+* [Catppuccin](https://catppuccin.com/)
+* Comunidad Arch Linux
 
 ---
 
-## 📜 License
-
-<div align="center">
+## 🧾 Licencia
 
 **MIT License** © 2024 **𓂀 Dreamcoder08 𓂀**
 
-This project is free and open-source. See [LICENSE](LICENSE) for details.
+Hecho con 💜 para devs que viven el terminal como un arte.
+
+<p align="center">
+  <sub>¿Te gustó? Deja una ⭐ en el repo y comparte el poder del terminal bien tuneado</sub><br><br>
+  <a href="https://github.com/Albert-fer02/zsh_custom_config/stargazers">
+    <img src="https://img.shields.io/github/stars/Albert-fer02/zsh_custom_config?style=social" />
+  </a>
+</p>
+```
 
 ---
 
-**Made with 💜 by passionate developers, for passionate developers**
-
-<sub>If this project helped you, please consider giving it a ⭐ on GitHub!</sub>
-
-[![GitHub Stars](https://img.shields.io/github/stars/Albert-fer02/zsh_custom_config?style=social)](https://github.com/Albert-fer02/zsh_custom_config/stargazers)
-
-</div>
