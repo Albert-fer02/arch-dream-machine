@@ -271,7 +271,5 @@ Hecho con 💜 para devs que viven el terminal como un arte.
     <img src="https://img.shields.io/github/stars/Albert-fer02/zsh_custom_config?style=social" />
   </a>
 </p>
-```
 
----
 
