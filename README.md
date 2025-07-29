@@ -8,17 +8,17 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/Albert-fer02/zsh_custom_config/stargazers">
-    <img src="https://img.shields.io/github/stars/Albert-fer02/zsh_custom_config?style=flat-square&color=ffd700" alt="Stars">
+  <a href="https://github.com/dreamcoder08/arch-dream-machine/stargazers">
+    <img src="https://img.shields.io/github/stars/dreamcoder08/arch-dream-machine?style=flat-square&color=ffd700" alt="Stars">
   </a>
-  <a href="https://github.com/Albert-fer02/zsh_custom_config/issues">
-    <img src="https://img.shields.io/github/issues/Albert-fer02/zsh_custom_config?style=flat-square&color=red" alt="Issues">
+  <a href="https://github.com/dreamcoder08/arch-dream-machine/issues">
+    <img src="https://img.shields.io/github/issues/dreamcoder08/arch-dream-machine?style=flat-square&color=red" alt="Issues">
   </a>
-  <a href="https://github.com/Albert-fer02/zsh_custom_config/network">
-    <img src="https://img.shields.io/github/forks/Albert-fer02/zsh_custom_config?style=flat-square&color=blue" alt="Forks">
+  <a href="https://github.com/dreamcoder08/arch-dream-machine/network">
+    <img src="https://img.shields.io/github/forks/dreamcoder08/arch-dream-machine?style=flat-square&color=blue" alt="Forks">
   </a>
   <a href="LICENSE">
-    <img src="https://img.shields.io/github/license/Albert-fer02/zsh_custom_config?style=flat-square&color=00e676" alt="License">
+    <img src="https://img.shields.io/github/license/dreamcoder08/arch-dream-machine?style=flat-square&color=00e676" alt="License">
   </a>
 </p>
 
@@ -75,14 +75,14 @@
 ### ☄️ Un solo comando:
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/Albert-fer02/zsh_custom_config/main/install.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/dreamcoder08/arch-dream-machine/main/install.sh)
 ````
 
 ### 🛠 Manual (alternativa):
 
 ```bash
-git clone https://github.com/Albert-fer02/zsh_custom_config.git
-cd zsh_custom_config
+git clone https://github.com/dreamcoder08/arch-dream-machine.git
+cd arch-dream-machine
 chmod +x install.sh
 ./install.sh
 ```
@@ -131,14 +131,21 @@ include ./themes/colors-dreamcoder.conf
 
 ```bash
 arch-dream-machine/
+├── README.md
 ├── install.sh
 ├── zshrc.template
 ├── p10k.zsh.template
-├── fastfetch/config.jsonc
-├── kitty/kitty.conf
-├── kitty/themes/
-├── docs/
-└── LICENSE
+├── fastfetch/
+│   ├── config.jsonc
+│   ├── Dreamcoder01.jpg
+│   ├── Dreamcoder02.jpg
+│   ├── Dreamcoder03.jpg
+│   └── Dreamcoder04.jpg
+├── kitty/
+│   ├── kitty.conf
+│   └── colors-dreamcoder.conf
+└── nano_custom/
+    └── nanorc.conf
 ```
 
 ---
@@ -180,7 +187,7 @@ plugins=(
 <details>
 <summary><b>🐞 Reportar un bug</b></summary>
 
-* Abre un [issue aquí](https://github.com/Albert-fer02/zsh_custom_config/issues)
+* Abre un [issue aquí](https://github.com/dreamcoder08/arch-dream-machine/issues)
 * Describe el problema, tu terminal, y cómo reproducirlo.
 
 </details>
@@ -267,8 +274,8 @@ Hecho con 💜 para devs que viven el terminal como un arte.
 
 <p align="center">
   <sub>¿Te gustó? Deja una ⭐ en el repo y comparte el poder del terminal bien tuneado</sub><br><br>
-  <a href="https://github.com/Albert-fer02/zsh_custom_config/stargazers">
-    <img src="https://img.shields.io/github/stars/Albert-fer02/zsh_custom_config?style=social" />
+  <a href="https://github.com/dreamcoder08/arch-dream-machine/stargazers">
+    <img src="https://img.shields.io/github/stars/dreamcoder08/arch-dream-machine?style=social" />
   </a>
 </p>
 
