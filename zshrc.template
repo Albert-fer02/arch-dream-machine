@@ -113,8 +113,8 @@ fi
 
 # History Configuration
 HISTFILE=~/.zsh_history
-HISTSIZE=50000              # Increased from 10000
-SAVEHIST=50000             # Increased from 10000
+HISTSIZE=10000              # ULTRA REDUCED: From 25000 to 10000
+SAVEHIST=10000             # ULTRA REDUCED: From 25000 to 10000
 setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicates first
 setopt HIST_IGNORE_ALL_DUPS      # No consecutive duplicates
 setopt HIST_IGNORE_SPACE         # No commands starting with space
@@ -205,8 +205,10 @@ if command -v eza &> /dev/null; then
     alias tree='eza --tree --level=3 --icons --git-ignore'
     alias ltree='eza --tree --level=4 --icons --long --git-ignore'
 else
+    # Fallback para sistemas sin eza
     alias ll='ls -alF --color=auto --group-directories-first'
     alias la='ls -A --color=auto --group-directories-first'
+    alias tree='find . -type d | head -20'
 fi
 
 if command -v rg &> /dev/null; then
@@ -369,7 +371,6 @@ alias activate='source ./venv/bin/activate'
 
 # Process management
 alias psg='ps aux | grep -v grep | grep -i'
-alias killall='killall -i'  # Interactive mode
 alias j='jobs'
 alias h='history'
 
@@ -463,6 +464,150 @@ sysstat() {
     echo "Memory Usage: $(free -h | awk '/^Mem:/ {printf "%s/%s (%.1f%%)", $3, $2, $3/$2*100}')"
     echo "Disk Usage: $(df -h / | awk 'NR==2 {printf "%s/%s (%s)", $3, $2, $5}')"
     echo "CPU Temperature: $(sensors 2>/dev/null | grep 'Core 0' | awk '{print $3}' || echo 'N/A')"
+}
+
+# =====================================================
+# 🚀 ADVANCED PRODUCTIVITY FUNCTIONS
+# =====================================================
+
+# Smart cd with automatic ls
+cd() {
+    builtin cd "$@" && {
+        [[ $(ls -1 | wc -l) -le 20 ]] && ls || echo "📁 $(pwd) ($(ls -1 | wc -l) items)"
+    }
+}
+
+# Find and edit files quickly
+fe() {
+    local files
+    if command -v fzf &>/dev/null; then
+        files=$(fzf --height 40% --reverse --border --preview 'bat --style=numbers --color=always {}' 2>/dev/null) && [[ -n "$files" ]] && ${EDITOR:-nvim} "$files"
+    else
+        local query="${1:-}"
+        [[ -z "$query" ]] && { echo "Usage: fe <search_pattern>"; return 1; }
+        files=$(find . -type f -name "*$query*" | head -10)
+        [[ -z "$files" ]] && { echo "No files found matching: $query"; return 1; }
+        echo "$files" | while read -r file; do
+            echo "Edit $file? (y/n/q)"
+            read -r response
+            case $response in
+                [Yy]*) ${EDITOR:-nvim} "$file"; break ;;
+                [Qq]*) break ;;
+            esac
+        done
+    fi
+}
+
+# Quick note taking
+note() {
+    local note_file="$HOME/.notes/$(date +%Y-%m-%d).md"
+    mkdir -p "$(dirname "$note_file")"
+    if [[ $# -eq 0 ]]; then
+        ${EDITOR:-nvim} "$note_file"
+    else
+        echo "$(date '+%H:%M') - $*" >> "$note_file"
+        echo "📝 Note added to $(basename "$note_file")"
+    fi
+}
+
+# Process finder and killer
+pskill() {
+    local query="${1:-}"
+    [[ -z "$query" ]] && { echo "Usage: pskill <process_name>"; return 1; }
+    local pids=$(pgrep -f "$query")
+    [[ -z "$pids" ]] && { echo "No processes found matching: $query"; return 1; }
+    echo "Found processes:"
+    ps -p "$pids" -o pid,cmd
+    echo -n "Kill these processes? (y/N): "
+    read -r response
+    [[ "$response" =~ ^[Yy] ]] && kill $pids && echo "✅ Processes killed."
+}
+
+# Git worktree management
+gw() {
+    case "${1:-list}" in
+        list|ls) git worktree list ;;
+        add) 
+            [[ -z "$2" ]] && { echo "Usage: gw add <branch> [path]"; return 1; }
+            git worktree add "${3:-../$2}" "$2" ;;
+        remove|rm)
+            [[ -z "$2" ]] && { echo "Usage: gw remove <path>"; return 1; }
+            git worktree remove "$2" ;;
+        *) echo "Usage: gw {list|add|remove} [args]" ;;
+    esac
+}
+
+# Docker quick commands
+dk() {
+    case "${1:-ps}" in
+        ps) docker ps --format "table {{.ID}}\t{{.Image}}\t{{.Status}}\t{{.Names}}" ;;
+        psa) docker ps -a --format "table {{.ID}}\t{{.Image}}\t{{.Status}}\t{{.Names}}" ;;
+        images|img) docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}" ;;
+        clean) docker system prune -f && docker volume prune -f ;;
+        logs) [[ -n "$2" ]] && docker logs -f "$2" || echo "Usage: dk logs <container>" ;;
+        exec) [[ -n "$2" ]] && docker exec -it "$2" /bin/bash || echo "Usage: dk exec <container>" ;;
+        *) echo "Usage: dk {ps|psa|images|clean|logs|exec} [args]" ;;
+    esac
+}
+
+# Quick HTTP server
+serve() {
+    local port="${1:-8000}"
+    local dir="${2:-.}"
+    echo "🌐 Serving $dir at http://localhost:$port"
+    if command -v python3 &>/dev/null; then
+        python3 -m http.server "$port" --directory "$dir"
+    elif command -v python &>/dev/null; then
+        cd "$dir" && python -m SimpleHTTPServer "$port"
+    else
+        echo "❌ Python not found"
+        return 1
+    fi
+}
+
+# Weather information with location
+weather() {
+    local location="${1:-Lima}"
+    if command -v curl &>/dev/null; then
+        echo "🌤️  Weather for $location:"
+        curl -s "wttr.in/$location?format=v2" 2>/dev/null || echo "❌ Weather service unavailable"
+    else
+        echo "❌ curl not available"
+    fi
+}
+
+# System cleanup with confirmation
+cleanup_system() {
+    echo "🧹 System Cleanup Summary:"
+    echo "  • Package cache: $(du -sh /var/cache/pacman/pkg 2>/dev/null | cut -f1 || echo '0B')"
+    echo "  • Journal logs: $(du -sh /var/log/journal 2>/dev/null | cut -f1 || echo '0B')"
+    echo "  • Orphaned packages: $(pacman -Qtdq 2>/dev/null | wc -l || echo '0')"
+    echo
+    read -p "Proceed with cleanup? (y/N): " -n 1 -r
+    echo
+    [[ $REPLY =~ ^[Yy]$ ]] && {
+        sudo pacman -Sc --noconfirm
+        sudo journalctl --vacuum-time=7d
+        local orphans=$(pacman -Qtdq 2>/dev/null)
+        [[ -n "$orphans" ]] && sudo pacman -Rns $orphans --noconfirm
+        echo "✅ System cleanup completed"
+    }
+}
+
+# Network diagnostics
+netdiag() {
+    echo "🌐 Network Diagnostics:"
+    echo "  • Gateway: $(ip route | grep default | awk '{print $3}' | head -1)"
+    echo "  • DNS: $(grep nameserver /etc/resolv.conf | awk '{print $2}' | tr '\n' ' ')"
+    echo "  • Public IP: $(curl -s ifconfig.me 2>/dev/null || echo 'N/A')"
+    echo "  • Connection test:"
+    for host in google.com archlinux.org github.com; do
+        if ping -c 1 -W 2 "$host" &>/dev/null; then
+            echo "    ✅ $host"
+        else
+            echo "    ❌ $host"
+        fi
+    done
 }
 
 # =====================================================
