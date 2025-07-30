@@ -1,0 +1,195 @@
+# ~/.bashrc - Arch Dream Machine Bash Fallback
+# =====================================================
+# 🚀 BASH Configuration - Fallback for non-Zsh systems
+# =====================================================
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+# =====================================================
+# 🔧 BASIC BASH CONFIGURATION
+# =====================================================
+
+# History settings
+HISTCONTROL=ignoreboth:erasedups
+HISTSIZE=10000
+HISTFILESIZE=10000
+shopt -s histappend
+shopt -s checkwinsize
+
+# Enable programmable completion features
+if ! shopt -oq posix; then
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
+        . /usr/share/bash-completion/bash_completion
+    elif [ -f /etc/bash_completion ]; then
+        . /etc/bash_completion
+    fi
+fi
+
+# =====================================================
+# 🎨 PROMPT CONFIGURATION
+# =====================================================
+
+# Colors
+RED='\[\033[0;31m\]'
+GREEN='\[\033[0;32m\]'
+YELLOW='\[\033[1;33m\]'
+BLUE='\[\033[0;34m\]'
+PURPLE='\[\033[0;35m\]'
+CYAN='\[\033[0;36m\]'
+WHITE='\[\033[1;37m\]'
+RESET='\[\033[0m\]'
+
+# Git branch in prompt
+parse_git_branch() {
+    git branch 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+
+# Simple but elegant prompt
+PS1="${CYAN}\u${RESET}@${GREEN}\h${RESET}:${BLUE}\w${YELLOW}\$(parse_git_branch)${RESET}\$ "
+
+# =====================================================
+# 🛠️ MODERN COMMAND REPLACEMENTS (same as zsh)
+# =====================================================
+
+# File Operations
+command -v bat &> /dev/null && {
+    alias cat='bat --style=plain --paging=never'
+    alias ccat='bat --style=full'
+    export BAT_THEME="Catppuccin Frappe"
+}
+
+if command -v eza &> /dev/null; then
+    alias ls='eza --icons --group-directories-first --git'
+    alias ll='eza -l --icons --group-directories-first --git --time-style=long-iso --smart-group'
+    alias la='eza -la --icons --group-directories-first --git --time-style=long-iso'
+    alias tree='eza --tree --level=3 --icons --git-ignore'
+else
+    alias ll='ls -alF --color=auto --group-directories-first'
+    alias la='ls -A --color=auto --group-directories-first'
+    alias tree='find . -type d | head -20'
+fi
+
+command -v rg &> /dev/null && {
+    alias grep='rg --smart-case --hidden --glob "!**/.git/*" --glob "!**/node_modules/*"'
+    alias rga='rg --no-ignore --hidden'
+}
+
+command -v fd &> /dev/null && {
+    alias find='fd'
+    alias fda='fd --no-ignore --hidden'
+}
+
+# System Monitoring
+command -v duf &> /dev/null && alias df='duf'
+command -v dust &> /dev/null && alias du='dust'
+command -v btop &> /dev/null && alias top='btop' || alias top='htop'
+
+# =====================================================
+# 📁 NAVIGATION & FILE MANAGEMENT
+# =====================================================
+
+# Navigation aliases
+alias ..='cd ..' 
+alias ...='cd ../..' 
+alias ~='cd ~' 
+alias -- -='cd -'
+
+# Directory shortcuts
+alias dl='cd ~/Downloads' 
+alias dt='cd ~/Desktop' 
+alias dc='cd ~/Documents' 
+alias dev='cd ~/Development' 
+alias proj='cd ~/Projects'
+
+# File operations with safety
+alias rm='rm -i' 
+alias cp='cp -i' 
+alias mv='mv -i' 
+alias mkdir='mkdir -p'
+
+# =====================================================
+# 🐙 GIT ALIASES
+# =====================================================
+
+alias g='git' 
+alias gs='git status --short --branch' 
+alias ga='git add' 
+alias gaa='git add --all' 
+alias gc='git commit --verbose' 
+alias gcm='git commit -m' 
+alias gca='git commit -am' 
+alias gp='git push' 
+alias gpl='git pull' 
+alias gl='git log --oneline --graph --decorate --all -10' 
+alias gd='git diff' 
+alias gdc='git diff --cached' 
+alias gco='git checkout' 
+alias gb='git branch' 
+alias gm='git merge'
+
+# =====================================================
+# 🔧 SYSTEM & PACKAGE MANAGEMENT
+# =====================================================
+
+# Pacman aliases
+alias pac='sudo pacman' 
+alias pacs='pacman -Ss' 
+alias paci='sudo pacman -S' 
+alias pacr='sudo pacman -R' 
+alias pacu='sudo pacman -Syu' 
+alias pacq='pacman -Q'
+
+# System maintenance
+alias cleanup='sudo pacman -Sc && sudo journalctl --vacuum-time=7d'
+
+# =====================================================
+# 🌐 NETWORK & UTILITIES
+# =====================================================
+
+alias myip='curl -s ifconfig.me && echo'
+alias localip="ip route get 8.8.8.8 | awk '{print \$7}'"
+alias ports='sudo lsof -i -P -n | grep LISTEN'
+alias ping='ping -c 5'
+
+# =====================================================
+# 🚀 FUNCTIONS
+# =====================================================
+
+# Extract function for various archive types
+extract() {
+    [[ -f "$1" ]] || { echo "'$1' is not a valid file"; return 1; }
+    case "$1" in
+        *.tar.bz2) tar xjf "$1" ;;
+        *.tar.gz)  tar xzf "$1" ;;
+        *.bz2)     bunzip2 "$1" ;;
+        *.rar)     unrar x "$1" ;;
+        *.gz)      gunzip "$1"  ;;
+        *.tar)     tar xf "$1"  ;;
+        *.tbz2)    tar xjf "$1" ;;
+        *.tgz)     tar xzf "$1" ;;
+        *.zip)     unzip "$1"   ;;
+        *.Z)       uncompress "$1" ;;
+        *.7z)      7z x "$1"    ;;
+        *.xz)      unxz "$1"    ;;
+        *)         echo "'$1': unrecognized file compression" ;;
+    esac
+}
+
+# Create directory and cd into it
+mkcd() { mkdir -p "$1" && cd "$1"; }
+
+# Quick backup of a file
+backup() { cp "$1" "$1.backup.$(date +%Y%m%d_%H%M%S)"; }
+
+# =====================================================
+# 🏁 INITIALIZATION
+# =====================================================
+
+# Load any additional custom configurations
+[[ -f ~/.bashrc.local ]] && source ~/.bashrc.local
+
+# Initialize fastfetch if available
+command -v fastfetch &> /dev/null && fastfetch
+
+echo "💙 Arch Dream Machine - Bash Mode Active"

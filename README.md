@@ -33,7 +33,8 @@
 ## 🖼️ Preview
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/0fbf24bb-253b-46c8-a92b-c1406cfee2ba" alt="Preview" width="850" />
+  <img src="./fastfetch/Dreamcoder01.jpg" alt="Preview Terminal" width="450" />
+  <img src="./fastfetch/Dreamcoder02.jpg" alt="Preview Fastfetch" width="400" />
   <br>
   <i>⚙️ Experiencia visual futurista directamente en tu terminal</i>
 </p>
@@ -48,13 +49,31 @@
 
 ## ✨ Características Principales
 
-| 🧩 Core | 🎨 Estética Pro |
-|--------|-----------------|
-| Zsh + Oh My Zsh | Sugerencias inteligentes y resaltado en tiempo real |
-| Powerlevel10k | Tema totalmente personalizable y ultra rápido |
-| Kitty Terminal | Aceleración GPU, hermoso y versátil |
-| Bat, eza, fd, rg | Reemplazos modernos para tus comandos CLI |
-| Fastfetch | Info del sistema, pero con flow Catppuccin |
+| 🧩 Core | 🎨 Estética Pro | 🚀 Nuevas Funciones |
+|--------|-----------------|-------------------|
+| Zsh + Oh My Zsh | Sugerencias inteligentes y resaltado en tiempo real | Funciones de productividad avanzadas |
+| Powerlevel10k | Tema totalmente personalizable y ultra rápido | Smart cd con preview automático |
+| Kitty Terminal | Aceleración GPU, hermoso y versátil | Editor de archivos con FZF |
+| Bat, eza, fd, rg | Reemplazos modernos para tus comandos CLI | Sistema de notas integrado |
+| Fastfetch | Info del sistema, pero con flow Catppuccin | Gestión de Docker y Git Worktrees |
+| **AUR Support** | **Yay/Paru integration** | **Bash Fallback incluido** |
+
+---
+
+## 🚀 Nuevas Funciones de Productividad
+
+| Función | Descripción | Ejemplo |
+|---------|-------------|---------|
+| `fe <pattern>` | Editor de archivos con FZF/búsqueda | `fe config` |
+| `note [texto]` | Sistema de notas rápido | `note "Idea importante"` |
+| `pskill <proceso>` | Buscar y terminar procesos | `pskill chrome` |
+| `gw <comando>` | Gestión de Git Worktrees | `gw add feature-branch` |
+| `dk <comando>` | Comandos Docker simplificados | `dk ps`, `dk clean` |
+| `serve [puerto]` | Servidor HTTP rápido | `serve 3000` |
+| `weather [ciudad]` | Información del clima | `weather "New York"` |
+| `cleanup_system` | Limpieza completa del sistema | Interactivo con confirmación |
+| `netdiag` | Diagnóstico de red completo | Prueba conectividad y DNS |
+| Smart `cd` | CD con preview automático | `cd` muestra contenido si <20 archivos |
 
 ---
 
@@ -76,15 +95,29 @@
 
 ```bash
 bash <(curl -fsSL https://raw.githubusercontent.com/dreamcoder08/arch-dream-machine/main/install.sh)
-````
+```
 
-### 🛠 Manual (alternativa):
+### 🛠 Instalación con opciones:
 
 ```bash
 git clone https://github.com/dreamcoder08/arch-dream-machine.git
 cd arch-dream-machine
 chmod +x install.sh
+
+# Instalación normal
 ./install.sh
+
+# Simulación (dry-run)
+./install.sh --dry-run
+
+# Sin AUR helper
+./install.sh --no-aur
+
+# Instalación mínima
+./install.sh --minimal
+
+# Ver todas las opciones
+./install.sh --help
 ```
 
 🔁 **Reinicia tu terminal** para aplicar los cambios.
@@ -223,32 +256,122 @@ plugins=(
 
 ---
 
-## 🆘 Ayuda rápida
+## 🆘 Troubleshooting & Ayuda
 
 <details>
-<summary><b>🎨 Tema roto</b></summary>
+<summary><b>🎨 Tema roto o caracteres extraños</b></summary>
 
 ```bash
+# Recargar configuración
 source ~/.zshrc
-# o simplemente reinicia
+exec zsh
+
+# Verificar fuentes instaladas
+fc-list | grep -i nerd
+
+# Reinstalar tema Powerlevel10k
+p10k configure
 ```
 
 </details>
 
 <details>
-<summary><b>🧩 Fuentes rotas</b></summary>
+<summary><b>🧩 Fuentes rotas o íconos faltantes</b></summary>
 
 ```bash
-sudo pacman -S ttf-meslo-nerd
+# Instalar fuentes Nerd completas
+sudo pacman -S ttf-fira-code-nerd ttf-meslo-nerd ttf-sourcecodepro-nerd
+
+# Verificar terminal soporta fuentes
+echo -e "\ue0b0 \u00b1 \ue0a0 \u27a6 \u2718 \u26a1 \u2699"
+
+# Actualizar cache de fuentes
+fc-cache -fv
 ```
 
 </details>
 
 <details>
-<summary><b>🐢 Terminal lento</b></summary>
+<summary><b>🐢 Terminal lento o lag</b></summary>
 
 ```bash
-zsh -xvs # Revisa plugins en conflicto
+# Diagnóstico de rendimiento
+zsh -xvs
+
+# Deshabilitar plugins problemáticos temporalmente
+# Edita ~/.zshrc y comenta plugins en la línea: plugins=(...)
+
+# Verificar Oh My Zsh
+omz doctor
+
+# Limpiar cache de completions
+rm -rf ~/.zsh/cache/*
+```
+
+</details>
+
+<details>
+<summary><b>🔧 Oh My Zsh no funciona</b></summary>
+
+```bash
+# Reinstalar Oh My Zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+# Verificar instalación
+ls -la ~/.oh-my-zsh/
+
+# Reinstalar Powerlevel10k
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+```
+
+</details>
+
+<details>
+<summary><b>⚠️ Errores de permisos</b></summary>
+
+```bash
+# Verificar permisos de archivos de configuración
+ls -la ~/.zshrc ~/.p10k.zsh
+
+# Corregir permisos si es necesario
+chmod 644 ~/.zshrc ~/.p10k.zsh
+chown $USER:$USER ~/.zshrc ~/.p10k.zsh
+
+# Verificar permisos sudo
+sudo -v
+```
+
+</details>
+
+<details>
+<summary><b>🚫 Comandos no encontrados</b></summary>
+
+```bash
+# Verificar PATH
+echo $PATH
+
+# Reinstalar herramientas faltantes
+sudo pacman -S bat eza fd ripgrep fzf
+
+# Verificar aliases
+which ls ll cat grep find
+```
+
+</details>
+
+<details>
+<summary><b>🔄 Desinstalar completamente</b></summary>
+
+```bash
+# Remover symlinks
+rm ~/.zshrc ~/.p10k.zsh ~/.nanorc
+rm -rf ~/.config/fastfetch ~/.config/kitty
+
+# Restaurar configuraciones originales
+mv ~/.config_backup_*/.[!.]* ~/  # Restaurar desde backup más reciente
+
+# Opcional: Remover Oh My Zsh
+rm -rf ~/.oh-my-zsh
 ```
 
 </details>
