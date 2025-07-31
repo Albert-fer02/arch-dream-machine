@@ -132,6 +132,9 @@ link_configs() {
     ln -sf "$CONFIG_DIR/zshrc.template" "$HOME/.zshrc" || warn "Fallo al enlazar .zshrc"
     ln -sf "$CONFIG_DIR/p10k.zsh.template" "$HOME/.p10k.zsh" || warn "Fallo al enlazar .p10k.zsh"
     
+    # Bash fallback
+    ln -sf "$CONFIG_DIR/bashrc.template" "$HOME/.bashrc" || warn "Fallo al enlazar .bashrc"
+    
     # Fastfetch & Kitty
     mkdir -p "$HOME/.config"
     ln -sfn "$CONFIG_DIR/fastfetch" "$HOME/.config/fastfetch" || warn "Fallo al enlazar fastfetch"
@@ -141,7 +144,45 @@ link_configs() {
     mkdir -p "$HOME/.nano/backups" || warn "Fallo al crear directorio de backups de Nano"
     ln -sf "$CONFIG_DIR/nano_custom/nanorc.conf" "$HOME/.nanorc" || warn "Fallo al enlazar .nanorc"
     
-    # Hacer ejecutables los scripts de cambio de tema
+    # Configuración de root (para sudo su)
+    log "Configurando entorno de root..."
+    if sudo test -w /root 2>/dev/null; then
+        # Configurar Oh My Zsh para root
+        if [ ! -d "/root/.oh-my-zsh" ]; then
+            log "Instalando Oh My Zsh para root..."
+            sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended 2>/dev/null || warn "⚠ No se pudo instalar Oh My Zsh para root"
+        fi
+        
+        # Instalar Powerlevel10k para root
+        if [ ! -d "/root/.oh-my-zsh/custom/themes/powerlevel10k" ]; then
+            log "Instalando Powerlevel10k para root..."
+            sudo git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "/root/.oh-my-zsh/custom/themes/powerlevel10k" 2>/dev/null || warn "⚠ No se pudo instalar Powerlevel10k para root"
+        fi
+        
+        # Enlaces simbólicos para root
+        sudo ln -sf "$CONFIG_DIR/zshrc.template" "/root/.zshrc" 2>/dev/null && success "✓ Root .zshrc enlazado" || warn "⚠ No se pudo enlazar .zshrc de root"
+        sudo ln -sf "$CONFIG_DIR/p10k.zsh.template" "/root/.p10k.zsh" 2>/dev/null && success "✓ Root .p10k.zsh enlazado" || warn "⚠ No se pudo enlazar .p10k.zsh de root"
+        sudo ln -sf "$CONFIG_DIR/bashrc.template" "/root/.bashrc" 2>/dev/null && success "✓ Root .bashrc enlazado" || warn "⚠ No se pudo enlazar .bashrc de root"
+        
+        # Configurar directorios necesarios para root
+        sudo mkdir -p "/root/.config" 2>/dev/null
+        sudo ln -sfn "$CONFIG_DIR/fastfetch" "/root/.config/fastfetch" 2>/dev/null && success "✓ Root fastfetch enlazado" || warn "⚠ No se pudo enlazar fastfetch de root"
+        sudo ln -sfn "$CONFIG_DIR/kitty" "/root/.config/kitty" 2>/dev/null && success "✓ Root kitty enlazado" || warn "⚠ No se pudo enlazar kitty de root"
+        
+        # Asegurar que root tenga Zsh como shell
+        if command -v zsh &>/dev/null; then
+            if [[ "$(sudo cat /etc/passwd | grep "^root:" | cut -d: -f7)" != "/usr/bin/zsh" ]]; then
+                log "Cambiando shell de root a Zsh..."
+                sudo chsh -s /usr/bin/zsh root 2>/dev/null && success "✓ Shell de root cambiado a Zsh" || warn "⚠ No se pudo cambiar shell de root"
+            else
+                success "✓ Root ya usa Zsh"
+            fi
+        fi
+        
+        success "✓ Configuración de root completada"
+    else
+        warn "⚠ No se puede acceder al directorio de root. Configuración de root omitida."
+    fi
 }
 
 # 🎊 Final
