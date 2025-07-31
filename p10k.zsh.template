@@ -24,6 +24,141 @@
   # Zsh >= 5.1 is required.
   [[ $ZSH_VERSION == (5.<1->*|<6->.*) ]] || return
 
+  # =========================[ DYNAMIC COLOR DETECTION & ADAPTATION ]=========================
+  # Function to detect terminal theme and background
+  function detect_terminal_theme() {
+    local is_dark=true
+    local is_light=false
+    
+    # Detect terminal type and theme
+    case "$TERM_PROGRAM" in
+      "iTerm.app")
+        # iTerm2 theme detection
+        if [[ -n "$ITERM_PROFILE" ]]; then
+          case "$ITERM_PROFILE" in
+            *"Light"*|*"light"*|*"Solarized Light"*|*"GitHub Light"*)
+              is_dark=false
+              is_light=true
+              ;;
+          esac
+        fi
+        ;;
+      "WarpTerminal"|"warp")
+        # Warp terminal theme detection
+        if [[ -n "$WARP_THEME" ]]; then
+          case "$WARP_THEME" in
+            *"Light"*|*"light"*|*"Day"*|*"day"*)
+              is_dark=false
+              is_light=true
+              ;;
+          esac
+        fi
+        ;;
+      "vscode")
+        # VS Code terminal theme detection
+        if [[ -n "$VSCODE_THEME" ]]; then
+          case "$VSCODE_THEME" in
+            *"Light"*|*"light"*|*"Day"*|*"day"*|*"Solarized Light"*)
+              is_dark=false
+              is_light=true
+              ;;
+          esac
+        fi
+        ;;
+    esac
+    
+    # Detect background color using terminal escape sequences
+    if command -v tput >/dev/null 2>&1; then
+      local bg_color=$(tput setab 0 2>/dev/null | tput sgr0 2>/dev/null)
+      # This is a simplified detection - in practice, you might need more sophisticated methods
+    fi
+    
+    # Environment variable override
+    if [[ -n "$P10K_THEME_MODE" ]]; then
+      case "$P10K_THEME_MODE" in
+        "light"|"Light"|"LIGHT")
+          is_dark=false
+          is_light=true
+          ;;
+        "dark"|"Dark"|"DARK")
+          is_dark=true
+          is_light=false
+          ;;
+      esac
+    fi
+    
+    # Export theme state
+    export P10K_IS_DARK=$is_dark
+    export P10K_IS_LIGHT=$is_light
+  }
+  
+  # Function to get adaptive colors based on theme
+  function get_adaptive_colors() {
+    local is_dark=${P10K_IS_DARK:-true}
+    
+    if [[ "$is_dark" == "true" ]]; then
+      # Dark theme colors - Tokyo Night Storm inspired
+      export P10K_PRIMARY_COLOR="#7AA2F7"      # Blue
+      export P10K_SECONDARY_COLOR="#9ECE6A"    # Green
+      export P10K_ACCENT_COLOR="#BB9AF7"       # Purple
+      export P10K_WARNING_COLOR="#E0AF68"      # Yellow
+      export P10K_ERROR_COLOR="#F7768E"        # Red
+      export P10K_BG_COLOR="#1A1B26"           # Dark background
+      export P10K_FG_COLOR="#C0CAF5"           # Light foreground
+      export P10K_DIM_COLOR="#414868"          # Dimmed text
+      export P10K_GLASS_COLOR="#24283B"        # Glassmorphism background
+    else
+      # Light theme colors - Solarized Light inspired
+      export P10K_PRIMARY_COLOR="#268BD2"      # Blue
+      export P10K_SECONDARY_COLOR="#859900"    # Green
+      export P10K_ACCENT_COLOR="#6C71C4"       # Purple
+      export P10K_WARNING_COLOR="#B58900"      # Yellow
+      export P10K_ERROR_COLOR="#DC322F"        # Red
+      export P10K_BG_COLOR="#FDF6E3"           # Light background
+      export P10K_FG_COLOR="#586E75"           # Dark foreground
+      export P10K_DIM_COLOR="#93A1A1"          # Dimmed text
+      export P10K_GLASS_COLOR="#EEE8D5"        # Glassmorphism background
+    fi
+  }
+  
+  # Function to get terminal-specific colors
+  function get_terminal_specific_colors() {
+    case "$TERM_PROGRAM" in
+      "iTerm.app")
+        # iTerm2 specific optimizations
+        export P10K_SEPARATOR_STYLE="powerline"
+        export P10K_ICON_PADDING="moderate"
+        ;;
+      "WarpTerminal"|"warp")
+        # Warp specific optimizations
+        export P10K_SEPARATOR_STYLE="round"
+        export P10K_ICON_PADDING="minimal"
+        ;;
+      "vscode")
+        # VS Code specific optimizations
+        export P10K_SEPARATOR_STYLE="flat"
+        export P10K_ICON_PADDING="standard"
+        ;;
+      *)
+        # Default terminal optimizations
+        export P10K_SEPARATOR_STYLE="powerline"
+        export P10K_ICON_PADDING="standard"
+        ;;
+    esac
+  }
+  
+  # Initialize theme detection and colors
+  detect_terminal_theme
+  get_adaptive_colors
+  get_terminal_specific_colors
+
+  # =========================[ WARP AI TERMINAL DETECTION ]=========================
+  # Detect if running in Warp AI terminal and apply specific optimizations
+  local is_warp=false
+  if [[ "$TERM_PROGRAM" == "WarpTerminal" ]] || [[ "$TERM_PROGRAM" == "warp" ]] || [[ "$WARP_TERMINAL" == "1" ]]; then
+    is_warp=true
+  fi
+
   # =========================[ MAIN SEGMENTS - ULTRA MODERN GLASSMORPHISM ]=========================
   # Left Prompt: Essential Information with Glassmorphism Panels
   typeset -g POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(
@@ -57,7 +192,7 @@
   # =========================[ GENERAL CONFIGURATION - ULTRA MODERN UX/UI ]=========================
   # Nerd Font v3 mode for unique icons and readability
   typeset -g POWERLEVEL9K_MODE=nerdfont-v3
-  typeset -g POWERLEVEL9K_ICON_PADDING=none
+  typeset -g POWERLEVEL9K_ICON_PADDING=${P10K_ICON_PADDING:-standard}
   typeset -g POWERLEVEL9K_ICON_BEFORE_CONTENT=true
 
   # Intelligent spacing for better readability and visual hierarchy
@@ -71,15 +206,15 @@
   typeset -g POWERLEVEL9K_DISABLE_HOT_RELOAD=true
 
   # =========================[ VISUAL SEPARATORS - ULTRA MODERN GLASSMORPHISM ]=========================
-  # Glassmorphism separators with ultra modern effect
-  typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX='%F{#7AA2F7}╭─'
-  typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_PREFIX='%F{#7AA2F7}├─'
-  typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX='%F{#7AA2F7}╰─'
+  # Glassmorphism separators with ultra modern effect - adaptive colors
+  typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%F{${P10K_PRIMARY_COLOR}}╭─"
+  typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_PREFIX="%F{${P10K_PRIMARY_COLOR}}├─"
+  typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{${P10K_PRIMARY_COLOR}}╰─"
   
   # Right side separators - glassmorphism symmetry
-  typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_SUFFIX='%F{#7AA2F7}─╮'
-  typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_SUFFIX='%F{#7AA2F7}─┤'
-  typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_SUFFIX='%F{#7AA2F7}─╯'
+  typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_SUFFIX="%F{${P10K_PRIMARY_COLOR}}─╮"
+  typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_SUFFIX="%F{${P10K_PRIMARY_COLOR}}─┤"
+  typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_SUFFIX="%F{${P10K_PRIMARY_COLOR}}─╯"
 
   # Fill character between left and right prompt
   typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_GAP_CHAR='─'
@@ -87,18 +222,18 @@
   typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_GAP_BACKGROUND=
   
   if [[ $POWERLEVEL9K_MULTILINE_FIRST_PROMPT_GAP_CHAR != ' ' ]]; then
-    typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_GAP_FOREGROUND=99
+    typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_GAP_FOREGROUND=${P10K_ACCENT_COLOR}
     typeset -g POWERLEVEL9K_EMPTY_LINE_LEFT_PROMPT_FIRST_SEGMENT_END_SYMBOL='%{%}'
     typeset -g POWERLEVEL9K_EMPTY_LINE_RIGHT_PROMPT_FIRST_SEGMENT_START_SYMBOL='%{%}'
   fi
 
-  # =========================[ BASE COLORS - TOKYO NIGHT STORM GLASSMORPHISM ]=========================
-  # Main background - pure black for glassmorphism effect
-  typeset -g POWERLEVEL9K_BACKGROUND=0
+  # =========================[ BASE COLORS - ADAPTIVE GLASSMORPHISM ]=========================
+  # Main background - adaptive for glassmorphism effect
+  typeset -g POWERLEVEL9K_BACKGROUND=${P10K_BG_COLOR}
 
-  # Segment separators - glassmorphism ultra modern
-  typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR='%F{#7AA2F7}\uE0B1'
-  typeset -g POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR='%F{#7AA2F7}\uE0B3'
+  # Segment separators - glassmorphism ultra modern with adaptive colors
+  typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR="%F{${P10K_PRIMARY_COLOR}}\uE0B1"
+  typeset -g POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR="%F{${P10K_PRIMARY_COLOR}}\uE0B3"
   
   # Separators between segments of different colors - perfect harmony
   typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR='\uE0B0'
@@ -112,8 +247,8 @@
   typeset -g POWERLEVEL9K_EMPTY_LINE_LEFT_PROMPT_LAST_SEGMENT_END_SYMBOL=
 
   # =========================[ OS_ICON: SYSTEM ICON - ULTRA MODERN GLASSMORPHISM ]=========================
-  # System icon color - glassmorphism ultra modern
-  typeset -g POWERLEVEL9K_OS_ICON_FOREGROUND=14
+  # System icon color - glassmorphism ultra modern with adaptive colors
+  typeset -g POWERLEVEL9K_OS_ICON_FOREGROUND=${P10K_SECONDARY_COLOR}
   # Custom icon for Arch Linux - futuristic glass effect
   typeset -g POWERLEVEL9K_OS_ICON_CONTENT_EXPANSION=''
 
@@ -121,9 +256,9 @@
   # Transparent background for visual focus
   typeset -g POWERLEVEL9K_PROMPT_CHAR_BACKGROUND=
   
-  # Prompt symbol colors - glassmorphism ultra modern
-  typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=14
-  typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=9
+  # Prompt symbol colors - glassmorphism ultra modern with adaptive colors
+  typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=${P10K_SECONDARY_COLOR}
+  typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=${P10K_ERROR_COLOR}
   
   # Simple and functional symbols
   typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION='❯'
@@ -138,12 +273,12 @@
   typeset -g POWERLEVEL9K_PROMPT_CHAR_LEFT_{LEFT,RIGHT}_WHITESPACE=
 
   # =========================[ DIR: CURRENT DIRECTORY - ULTRA MODERN GLASSMORPHISM ]=========================
-  # Directory colors - glassmorphism ultra modern
-  typeset -g POWERLEVEL9K_DIR_FOREGROUND=15
+  # Directory colors - glassmorphism ultra modern with adaptive colors
+  typeset -g POWERLEVEL9K_DIR_FOREGROUND=${P10K_FG_COLOR}
   typeset -g POWERLEVEL9K_SHORTEN_STRATEGY=truncate_to_unique
   typeset -g POWERLEVEL9K_SHORTEN_DELIMITER=''
-  typeset -g POWERLEVEL9K_DIR_SHORTENED_FOREGROUND=7
-  typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND=14
+  typeset -g POWERLEVEL9K_DIR_SHORTENED_FOREGROUND=${P10K_DIM_COLOR}
+  typeset -g POWERLEVEL9K_DIR_ANCHOR_FOREGROUND=${P10K_SECONDARY_COLOR}
   typeset -g POWERLEVEL9K_DIR_ANCHOR_BOLD=true
   
   # Space optimization for better readability
@@ -160,7 +295,7 @@
   )
   typeset -g POWERLEVEL9K_SHORTEN_FOLDER_MARKER="(${(j:|:)anchor_files})"
   typeset -g POWERLEVEL9K_DIR_TRUNCATE_BEFORE_MARKER=false
-  typeset -g POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
+  typeset -g POWERLEVEL9K_DIR_SHORTEN_DIR_LENGTH=1
   typeset -g POWERLEVEL9K_DIR_MAX_LENGTH=80
   typeset -g POWERLEVEL9K_DIR_MIN_COMMAND_COLUMNS=40
   typeset -g POWERLEVEL9K_DIR_MIN_COMMAND_COLUMNS_PCT=50
@@ -172,7 +307,7 @@
   typeset -g POWERLEVEL9K_VCS_BRANCH_ICON='\uF126 '
   typeset -g POWERLEVEL9K_VCS_UNTRACKED_ICON='?'
 
-  # Custom Git formatter with Tokyo Night colors
+  # Custom Git formatter with adaptive colors
   function my_git_formatter() {
     emulate -L zsh
 
@@ -182,19 +317,19 @@
     fi
 
     if (( $1 )); then
-      # Tokyo Night Storm colors - glassmorphism
-      local       meta='%F{#7AA2F7}'  # blue glassmorphism
-      local      clean='%F{#9ECE6A}'  # green glassmorphism
-      local   modified='%F{#E0AF68}'  # yellow glassmorphism
-      local  untracked='%F{#BB9AF7}'  # purple glassmorphism
-      local conflicted='%F{#F7768E}'  # red glassmorphism
+      # Adaptive colors based on theme
+      local       meta="%F{${P10K_PRIMARY_COLOR}}"   # primary color
+      local      clean="%F{${P10K_SECONDARY_COLOR}}" # secondary color
+      local   modified="%F{${P10K_WARNING_COLOR}}"   # warning color
+      local  untracked="%F{${P10K_ACCENT_COLOR}}"    # accent color
+      local conflicted="%F{${P10K_ERROR_COLOR}}"     # error color
     else
-      # Colors for incomplete state - ultra modern grays
-      local       meta='%F{#414868}'  # dark gray glassmorphism
-      local      clean='%F{#414868}'
-      local   modified='%F{#414868}'
-      local  untracked='%F{#414868}'
-      local conflicted='%F{#414868}'
+      # Colors for incomplete state - adaptive dimmed colors
+      local       meta="%F{${P10K_DIM_COLOR}}"
+      local      clean="%F{${P10K_DIM_COLOR}}"
+      local   modified="%F{${P10K_DIM_COLOR}}"
+      local  untracked="%F{${P10K_DIM_COLOR}}"
+      local conflicted="%F{${P10K_DIM_COLOR}}"
     fi
 
     local res
@@ -252,85 +387,124 @@
   typeset -g POWERLEVEL9K_VCS_LOADING_CONTENT_EXPANSION='${$((my_git_formatter(0)))+${my_git_format}}'
   typeset -g POWERLEVEL9K_VCS_{STAGED,UNSTAGED,UNTRACKED,CONFLICTED,COMMITS_AHEAD,COMMITS_BEHIND}_MAX_NUM=-1
 
-  # Git icon colors - glassmorphism ultra modern
-  typeset -g POWERLEVEL9K_VCS_VISUAL_IDENTIFIER_COLOR=14
-  typeset -g POWERLEVEL9K_VCS_LOADING_VISUAL_IDENTIFIER_COLOR=99
-  typeset -g POWERLEVEL9K_VCS_PREFIX='%F{#7AA2F7}on '
+  # Git icon colors - glassmorphism ultra modern with adaptive colors
+  typeset -g POWERLEVEL9K_VCS_VISUAL_IDENTIFIER_COLOR=${P10K_SECONDARY_COLOR}
+  typeset -g POWERLEVEL9K_VCS_LOADING_VISUAL_IDENTIFIER_COLOR=${P10K_ACCENT_COLOR}
+  typeset -g POWERLEVEL9K_VCS_PREFIX="%F{${P10K_PRIMARY_COLOR}}on "
 
   typeset -g POWERLEVEL9K_VCS_BACKENDS=(git)
-  typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND=76
-  typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND=76
-  typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND=178
+  typeset -g POWERLEVEL9K_VCS_CLEAN_FOREGROUND=${P10K_SECONDARY_COLOR}
+  typeset -g POWERLEVEL9K_VCS_UNTRACKED_FOREGROUND=${P10K_SECONDARY_COLOR}
+  typeset -g POWERLEVEL9K_VCS_MODIFIED_FOREGROUND=${P10K_WARNING_COLOR}
 
   # =========================[ DISK_USAGE: DISK SPACE MONITORING ]=========================
-  typeset -g POWERLEVEL9K_DISK_USAGE_NORMAL_FOREGROUND=15
-  typeset -g POWERLEVEL9K_DISK_USAGE_WARNING_FOREGROUND=11
-  typeset -g POWERLEVEL9K_DISK_USAGE_CRITICAL_FOREGROUND=9
+  typeset -g POWERLEVEL9K_DISK_USAGE_NORMAL_FOREGROUND=${P10K_FG_COLOR}
+  typeset -g POWERLEVEL9K_DISK_USAGE_WARNING_FOREGROUND=${P10K_WARNING_COLOR}
+  typeset -g POWERLEVEL9K_DISK_USAGE_CRITICAL_FOREGROUND=${P10K_ERROR_COLOR}
   typeset -g POWERLEVEL9K_DISK_USAGE_WARNING_LEVEL=90
   typeset -g POWERLEVEL9K_DISK_USAGE_CRITICAL_LEVEL=95
   typeset -g POWERLEVEL9K_DISK_USAGE_ONLY_WARNING=false
   typeset -g POWERLEVEL9K_DISK_USAGE_VISUAL_IDENTIFIER_EXPANSION=''
 
   # =========================[ NETWORK: NETWORK CONNECTIVITY ]=========================
-  typeset -g POWERLEVEL9K_NETWORK_FOREGROUND=15
+  typeset -g POWERLEVEL9K_NETWORK_FOREGROUND=${P10K_FG_COLOR}
   typeset -g POWERLEVEL9K_NETWORK_VISUAL_IDENTIFIER_EXPANSION=''
   typeset -g POWERLEVEL9K_NETWORK_INTERFACE_SORTING=auto
   typeset -g POWERLEVEL9K_NETWORK_VERBOSE=false
 
   # =========================[ LOAD: SYSTEM LOAD - ULTRA MODERN GLASSMORPHISM ]=========================
-  typeset -g POWERLEVEL9K_LOAD_NORMAL_FOREGROUND=10
-  typeset -g POWERLEVEL9K_LOAD_WARNING_FOREGROUND=11
-  typeset -g POWERLEVEL9K_LOAD_CRITICAL_FOREGROUND=9
+  typeset -g POWERLEVEL9K_LOAD_NORMAL_FOREGROUND=${P10K_SECONDARY_COLOR}
+  typeset -g POWERLEVEL9K_LOAD_WARNING_FOREGROUND=${P10K_WARNING_COLOR}
+  typeset -g POWERLEVEL9K_LOAD_CRITICAL_FOREGROUND=${P10K_ERROR_COLOR}
   typeset -g POWERLEVEL9K_LOAD_WHICH=1
   typeset -g POWERLEVEL9K_LOAD_NORMAL_VISUAL_IDENTIFIER_EXPANSION=''
   typeset -g POWERLEVEL9K_LOAD_WARNING_VISUAL_IDENTIFIER_EXPANSION=''
   typeset -g POWERLEVEL9K_LOAD_CRITICAL_VISUAL_IDENTIFIER_EXPANSION=''
 
   # =========================[ RAM: MEMORY USAGE - ULTRA MODERN GLASSMORPHISM ]=========================
-  typeset -g POWERLEVEL9K_RAM_FOREGROUND=15
+  typeset -g POWERLEVEL9K_RAM_FOREGROUND=${P10K_FG_COLOR}
   typeset -g POWERLEVEL9K_RAM_VISUAL_IDENTIFIER_EXPANSION=''
   typeset -g POWERLEVEL9K_RAM_ELEMENTS=(ram_free)
 
   # =========================[ CPU_ARCH: CPU USAGE - ULTRA MODERN GLASSMORPHISM ]=========================
-  typeset -g POWERLEVEL9K_CPU_ARCH_FOREGROUND=15
+  typeset -g POWERLEVEL9K_CPU_ARCH_FOREGROUND=${P10K_FG_COLOR}
   typeset -g POWERLEVEL9K_CPU_ARCH_VISUAL_IDENTIFIER_EXPANSION=''
-  typeset -g POWERLEVEL9K_CPU_ARCH_PREFIX='%F{#7AA2F7}CPU: '
+  typeset -g POWERLEVEL9K_CPU_ARCH_PREFIX="%F{${P10K_PRIMARY_COLOR}}CPU: "
 
   # =========================[ STATUS: EXIT CODE - FEEDBACK UX ]=========================
   # Extended states for complete visual feedback
   typeset -g POWERLEVEL9K_STATUS_EXTENDED_STATES=true
   
-  # Success states - glassmorphism ultra modern
+  # Success states - glassmorphism ultra modern with adaptive colors
   typeset -g POWERLEVEL9K_STATUS_OK=false
-  typeset -g POWERLEVEL9K_STATUS_OK_FOREGROUND=14
+  typeset -g POWERLEVEL9K_STATUS_OK_FOREGROUND=${P10K_SECONDARY_COLOR}
   typeset -g POWERLEVEL9K_STATUS_OK_VISUAL_IDENTIFIER_EXPANSION='✔'
   typeset -g POWERLEVEL9K_STATUS_OK_PIPE=true
-  typeset -g POWERLEVEL9K_STATUS_OK_PIPE_FOREGROUND=14
+  typeset -g POWERLEVEL9K_STATUS_OK_PIPE_FOREGROUND=${P10K_SECONDARY_COLOR}
   typeset -g POWERLEVEL9K_STATUS_OK_PIPE_VISUAL_IDENTIFIER_EXPANSION='✔'
   
-  # Error states - glassmorphism ultra modern
+  # Error states - glassmorphism ultra modern with adaptive colors
   typeset -g POWERLEVEL9K_STATUS_ERROR=false
-  typeset -g POWERLEVEL9K_STATUS_ERROR_FOREGROUND=9
+  typeset -g POWERLEVEL9K_STATUS_ERROR_FOREGROUND=${P10K_ERROR_COLOR}
   typeset -g POWERLEVEL9K_STATUS_ERROR_VISUAL_IDENTIFIER_EXPANSION='✘'
   typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL=true
-  typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_FOREGROUND=9
+  typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_FOREGROUND=${P10K_ERROR_COLOR}
   typeset -g POWERLEVEL9K_STATUS_VERBOSE_SIGNAME=false
   typeset -g POWERLEVEL9K_STATUS_ERROR_SIGNAL_VISUAL_IDENTIFIER_EXPANSION='✘'
   typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE=true
-  typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE_FOREGROUND=9
+  typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE_FOREGROUND=${P10K_ERROR_COLOR}
   typeset -g POWERLEVEL9K_STATUS_ERROR_PIPE_VISUAL_IDENTIFIER_EXPANSION='✘'
 
   # =========================[ COMMAND_EXECUTION_TIME: DURATION ]=========================
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_THRESHOLD=3
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_PRECISION=0
-  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=99
+  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FOREGROUND=${P10K_ACCENT_COLOR}
   typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_FORMAT='d h m s'
-  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_PREFIX='%F{#7AA2F7}took '
+  typeset -g POWERLEVEL9K_COMMAND_EXECUTION_TIME_PREFIX="%F{${P10K_PRIMARY_COLOR}}took "
 
   # =========================[ BACKGROUND_JOBS: BACKGROUND PROCESSES ]=========================
-  typeset -g POWERLEVEL9K_BACKGROUND_JOBS_FOREGROUND=11
+  typeset -g POWERLEVEL9K_BACKGROUND_JOBS_FOREGROUND=${P10K_WARNING_COLOR}
   typeset -g POWERLEVEL9K_BACKGROUND_JOBS_VISUAL_IDENTIFIER_EXPANSION=''
   typeset -g POWERLEVEL9K_BACKGROUND_JOBS_VERBOSE=true
+
+  # =========================[ WARP AI SPECIFIC OPTIMIZATIONS ]=========================
+  if [[ "$is_warp" == "true" ]]; then
+    # Warp AI specific font and rendering optimizations
+    typeset -g POWERLEVEL9K_MODE=nerdfont-v3
+    
+    # Optimize separators for Warp AI rendering
+    typeset -g POWERLEVEL9K_LEFT_SEGMENT_SEPARATOR='\uE0B0'
+    typeset -g POWERLEVEL9K_RIGHT_SEGMENT_SEPARATOR='\uE0B2'
+    typeset -g POWERLEVEL9K_LEFT_SUBSEGMENT_SEPARATOR='\uE0B1'
+    typeset -g POWERLEVEL9K_RIGHT_SUBSEGMENT_SEPARATOR='\uE0B3'
+    
+    # Enhanced visual separators for Warp AI
+    typeset -g POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%F{${P10K_PRIMARY_COLOR}}╭─"
+    typeset -g POWERLEVEL9K_MULTILINE_NEWLINE_PROMPT_PREFIX="%F{${P10K_PRIMARY_COLOR}}├─"
+    typeset -g POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{${P10K_PRIMARY_COLOR}}╰─"
+    
+    # Warp AI specific prompt symbols for better compatibility
+    typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VIINS_CONTENT_EXPANSION='❯'
+    typeset -g POWERLEVEL9K_PROMPT_CHAR_{OK,ERROR}_VICMD_CONTENT_EXPANSION='❮'
+    
+    # Optimize spacing for Warp AI
+    typeset -g POWERLEVEL9K_ICON_PADDING=none
+    typeset -g POWERLEVEL9K_ICON_BEFORE_CONTENT=true
+    
+    # Enhanced performance for Warp AI
+    typeset -g POWERLEVEL9K_INSTANT_PROMPT=verbose
+    typeset -g POWERLEVEL9K_DISABLE_HOT_RELOAD=true
+    
+    # Warp AI specific color adjustments for better contrast
+    typeset -g POWERLEVEL9K_BACKGROUND=${P10K_BG_COLOR}
+    typeset -g POWERLEVEL9K_PROMPT_CHAR_OK_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=${P10K_SECONDARY_COLOR}
+    typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=${P10K_ERROR_COLOR}
+    
+    # Optimize directory display for Warp AI
+    typeset -g POWERLEVEL9K_DIR_MAX_LENGTH=70
+    typeset -g POWERLEVEL9K_DIR_MIN_COMMAND_COLUMNS=35
+    typeset -g POWERLEVEL9K_DIR_MIN_COMMAND_COLUMNS_PCT=45
+  fi
 
   # =========================[ ADDITIONAL CONFIGURATIONS - UX/UI OPTIMIZATION ]=========================
   # Transient prompt for fluid experience and visual focus
@@ -341,6 +515,18 @@
 
   # Disable hot reload for optimal performance
   typeset -g POWERLEVEL9K_DISABLE_HOT_RELOAD=true
+
+  # =========================[ THEME RELOAD FUNCTION ]=========================
+  # Function to reload theme with new colors
+  function p10k_reload_theme() {
+    detect_terminal_theme
+    get_adaptive_colors
+    get_terminal_specific_colors
+    p10k reload
+  }
+
+  # Make reload function available globally (zsh compatible)
+  autoload -Uz p10k_reload_theme
 
   # If p10k is already loaded, reload configuration
   (( ! $+functions[p10k] )) || p10k reload
