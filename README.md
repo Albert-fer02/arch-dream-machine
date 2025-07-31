@@ -33,7 +33,7 @@
 ## 🖼️ Preview
 
 <p align="center">
-  <img src="fastfetch/Dreamcoder01.jpg" alt="Arch Dream Machine Preview" width="850" />
+  <img src="Dreamcoder.jpg" alt="Arch Dream Machine Preview" width="850" />
   <br>
   <i>⚙️ Experiencia visual futurista directamente en tu terminal</i>
 </p>
