@@ -8,17 +8,17 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/dreamcoder08/arch-dream-machine/stargazers">
-    <img src="https://img.shields.io/github/stars/dreamcoder08/arch-dream-machine?style=flat-square&color=ffd700" alt="Stars">
+  <a href="https://github.com/Albert-fer02/arch-dream-machine/stargazers">
+    <img src="https://img.shields.io/github/stars/Albert-fer02/arch-dream-machine?style=flat-square&color=ffd700" alt="Stars">
   </a>
-  <a href="https://github.com/dreamcoder08/arch-dream-machine/issues">
-    <img src="https://img.shields.io/github/issues/dreamcoder08/arch-dream-machine?style=flat-square&color=red" alt="Issues">
+  <a href="https://github.com/Albert-fer02/arch-dream-machine/issues">
+    <img src="https://img.shields.io/github/issues/Albert-fer02/arch-dream-machine?style=flat-square&color=red" alt="Issues">
   </a>
-  <a href="https://github.com/dreamcoder08/arch-dream-machine/network">
-    <img src="https://img.shields.io/github/forks/dreamcoder08/arch-dream-machine?style=flat-square&color=blue" alt="Forks">
+  <a href="https://github.com/Albert-fer02/arch-dream-machine/network">
+    <img src="https://img.shields.io/github/forks/Albert-fer02/arch-dream-machine?style=flat-square&color=blue" alt="Forks">
   </a>
   <a href="LICENSE">
-    <img src="https://img.shields.io/github/license/dreamcoder08/arch-dream-machine?style=flat-square&color=00e676" alt="License">
+    <img src="https://img.shields.io/github/license/Albert-fer02/arch-dream-machine?style=flat-square&color=00e676" alt="License">
   </a>
 </p>
 
@@ -42,7 +42,7 @@
 
 ## 🔥 ¿Qué es ARCH DREAM MACHINE?
 
-**ARCH DREAM MACHINE** es más que una configuración de Zsh. Es una arquitectura visual + funcional pensada para devs creativos como tú. Un ecosistema completo, ligero, moderno, rápido, y listo para usar.
+**ARCH DREAM MACHINE** es más que una configuración de Zsh. Es una arquitectura visual + funcional pensada para devs creativos. Un ecosistema completo, ligero, moderno, rápido, y listo para usar.
 
 ---
 
@@ -76,16 +76,16 @@
 
 ```bash
 # Instalación normal (solo usuario)
-bash <(curl -fsSL https://raw.githubusercontent.com/dreamcoder08/arch-dream-machine/main/install.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/Albert-fer02/arch-dream-machine/main/install.sh)
 
 # Instalación + configuración automática de root
-sudo bash <(curl -fsSL https://raw.githubusercontent.com/dreamcoder08/arch-dream-machine/main/install.sh)
+sudo bash <(curl -fsSL https://raw.githubusercontent.com/Albert-fer02/arch-dream-machine/main/install.sh)
 ```
 
 ### 🛠 Manual (alternativa):
 
 ```bash
-git clone https://github.com/dreamcoder08/arch-dream-machine.git
+git clone https://github.com/Albert-fer02/arch-dream-machine.git
 cd arch-dream-machine
 chmod +x install.sh
 
@@ -434,7 +434,7 @@ nslookup github.com
 echo "nameserver 8.8.8.8" | sudo tee -a /etc/resolv.conf
 
 # 4. Usar instalación manual si curl falla
-git clone https://github.com/dreamcoder08/arch-dream-machine.git
+git clone https://github.com/Albert-fer02/arch-dream-machine.git
 cd arch-dream-machine
 ./install.sh
 ```
@@ -486,7 +486,7 @@ Si los problemas persisten:
 
 1. **Revisa los logs:** `cat ~/setup_arch_dream.log`
 2. **Verifica tu sistema:** `fastfetch` o `neofetch`
-3. **Abre un issue:** [GitHub Issues](https://github.com/dreamcoder08/arch-dream-machine/issues)
+3. **Abre un issue:** [GitHub Issues](https://github.com/Albert-fer02/arch-dream-machine/issues)
 4. **Incluye información:**
    - Versión de Arch Linux
    - Salida de `fastfetch`
@@ -502,7 +502,7 @@ Si los problemas persisten:
 <details>
 <summary><b>🐞 Reportar un bug</b></summary>
 
-* Abre un [issue aquí](https://github.com/dreamcoder08/arch-dream-machine/issues)
+* Abre un [issue aquí](https://github.com/Albert-fer02/arch-dream-machine/issues)
 * Describe el problema, tu terminal, y cómo reproducirlo.
 
 </details>
@@ -559,8 +559,8 @@ Hecho con 💜 para devs que viven el terminal como un arte.
 
 <p align="center">
   <sub>¿Te gustó? Deja una ⭐ en el repo y comparte el poder del terminal bien tuneado</sub><br><br>
-  <a href="https://github.com/dreamcoder08/arch-dream-machine/stargazers">
-    <img src="https://img.shields.io/github/stars/dreamcoder08/arch-dream-machine?style=social" />
+  <a href="https://github.com/Albert-fer02/arch-dream-machine/stargazers">
+    <img src="https://img.shields.io/github/stars/Albert-fer02/arch-dream-machine?style=social" />
   </a>
 </p>
 
